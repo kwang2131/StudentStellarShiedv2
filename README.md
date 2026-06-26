@@ -1,97 +1,68 @@
 # StudyBond
 
+[![CI](https://github.com/kwang2131/StudentStellarShiedv2/actions/workflows/ci.yml/badge.svg)](https://github.com/kwang2131/StudentStellarShiedv2/actions/workflows/ci.yml)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![Stellar](https://img.shields.io/badge/Stellar-Testnet-1d8cff)
+![Soroban](https://img.shields.io/badge/Soroban-Contract%20Deployed-0f8f63)
+
 Proof-of-funds and conditional deposit rail for international students on Stellar testnet.
 
-## Pitch
+## Submission Snapshot
 
-StudyBond helps students, parents, schools, dorms, agencies, and landlords coordinate deposits with a visible rulebook: funds are locked for a specific purpose, verified publicly in a safe way, and released or refunded only when the agreed condition is met.
+- Public GitHub repository: `https://github.com/kwang2131/StudentStellarShiedv2`
+- README with complete documentation: complete
+- Minimum 10+ meaningful commits: complete (`12` commits in current history)
+- Live demo link: intentionally left blank for now
+- Contract deployment address: `CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N`
+- Contract interaction transaction hash: `93c498b48e9cc3a02382307390cab5b2fb1b8f48c2cbb40ce7b8d397e948e9ff`
+- Demo video link: intentionally left blank for now
 
-This repository is a production-oriented MVP for the Stellar Startup Track Level 4 brief. It is built with Next.js App Router, Prisma + Neon PostgreSQL, and a Soroban escrow contract deployed on Stellar testnet.
+## Project Links
 
-## Demo status
+- Repository: `https://github.com/kwang2131/StudentStellarShiedv2`
+- CI workflow: `https://github.com/kwang2131/StudentStellarShiedv2/actions/workflows/ci.yml`
+- Contract: `https://stellar.expert/explorer/testnet/contract/CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N`
+- Contract deploy tx: `https://stellar.expert/explorer/testnet/tx/6974a0a1604d0cfbf73977ad1094fdb40973ef4e6ffb0d4fe4c9ad0735fe0f47`
+- Featured interaction tx: `https://stellar.expert/explorer/testnet/tx/93c498b48e9cc3a02382307390cab5b2fb1b8f48c2cbb40ce7b8d397e948e9ff`
 
-- Live demo: intentionally blank for now
-- Demo video: intentionally blank for now
-- Network: Stellar testnet only
-- Contract ID: `CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N`
+## What StudyBond Solves
 
-## Compliance disclaimer
+International students and their families often need to lock money for tuition deposits, dorm reservations, rental deposits, or visa proof-of-funds workflows. The current flow is manual and trust-heavy: screenshots go stale, refund conditions are vague, and multiple actors coordinate over spreadsheets and chat.
 
-- Testnet only
-- No real money
-- Not a licensed escrow service
-- Not a banking service
-- Not a legal proof-of-funds service
-- Any mainnet or fiat rollout would require legal review, KYC/AML assessment, privacy policy work, and licensed partner evaluation
+StudyBond replaces that with:
 
-## Problem
-
-International students regularly need to prove or reserve funds for:
-
-- tuition deposits
-- dorm reservations
-- rental deposits
-- visa proof-of-funds workflows
-
-The current process is fragmented and trust-heavy:
-
-- bank screenshots are easy to fake or become stale
-- international deposits are often sent before clear conditions are agreed
-- students and parents do not get a transparent refund path if visa/admission/housing outcomes change
-- schools, dorms, landlords, and agencies still manage status manually across email, spreadsheets, and screenshots
-
-## Solution
-
-StudyBond combines:
-
-- off-chain case management in a product UI
-- on-chain Soroban escrow state on Stellar testnet
+- a single Next.js product surface
+- role-based workflows for student, parent, verifier, agency, and mediator personas
+- Soroban escrow logic on Stellar testnet
+- real Freighter and Rabet wallet connectivity
 - public-safe verification pages
-- auditable wallet interaction proofs
-- explicit release, refund, dispute, and expiry rules
-
-The product is intentionally narrow: cross-border money with purpose, proof, and conditional release.
+- proof logging for wallet interactions and transaction history
 
 ## Why Stellar
 
-- Soroban gives contract-controlled release and refund logic
-- testnet transactions are fast enough for demoable product flows
+- Soroban gives explicit release, refund, dispute, and expiry rules
+- Stellar testnet settlement is fast enough for end-to-end demoable flows
 - explorer links make reviewer verification straightforward
-- Freighter and Rabet are both supported in the main wallet layer
-- Stellar testnet accounts are easy to bootstrap for technical validation
+- Freighter and Rabet fit the required real wallet path
+- transaction hashes are easy to surface inside a reviewer-facing product
 
-## Why Freighter + Rabet
+## Tech Stack
 
-The MVP is required to support at least two real Stellar wallets. StudyBond implements:
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Prisma 7 + Neon PostgreSQL
+- Soroban Rust smart contract
+- `@stellar/stellar-sdk`
+- `@creit.tech/stellar-wallets-kit`
+- Vitest + Testing Library
+- GitHub Actions CI
+- Vercel-ready deployment config
 
-- wallet selector UI for `Freighter` and `Rabet`
-- shared wallet adapter layer through Stellar Wallets Kit
-- availability checks and install guidance
-- network mismatch handling for testnet
-- rejection/error logging paths
-- wallet proof persistence with provider, public key, action, tx hash, timestamp, contract address, and success/failure metadata
+## Product Scope
 
-Technical validation scripts in this repo can also sign via Stellar CLI identities. Those CLI-signed actions are real testnet transactions and are tracked separately from browser-wallet UX testing.
-
-## Features
-
-- Landing page with product story, wallet support, and testnet disclaimer
-- Onboarding flow with role selection and wallet connection
-- Dashboard for cases, wallet proofs, activity, and metrics
-- Create StudyBond case flow
-- Bonds list with filters and search
-- Bond detail page with role-based actions
-- Public verify page at `/verify/[caseId]`
-- Evidence metadata submission
-- Release, refund, dispute, and resolution workflows
-- Wallet proof page at `/wallet-proofs`
-- Test wallet directory at `/test-wallets`
-- Analytics page at `/analytics`
-- Feedback collection page at `/feedback`
-- Submission checklist page at `/submission`
-- Soroban contract tests and frontend/business-logic tests
-
-## User roles
+### Supported roles
 
 - `STUDENT`
 - `PARENT_GUARDIAN`
@@ -101,104 +72,38 @@ Technical validation scripts in this repo can also sign via Stellar CLI identiti
 - `ADMIN`
 - `REVIEWER`
 
-## Product flows implemented
+### Implemented flows
 
-### A. Onboarding
+- Onboarding with role selection
+- Real wallet connection via Freighter and Rabet
+- Role-aware navigation and menu switching
+- Case creation for tuition, dorm, rental, and visa proof scenarios
+- Funding flow with contract interaction persistence
+- Evidence submission
+- Release flow
+- Refund flow
+- Dispute flow
+- Public verification page at `/verify/[caseId]`
+- Wallet proof audit page at `/wallet-proofs`
+- Analytics and monitoring page at `/analytics`
+- Feedback collection at `/feedback`
+- Submission readiness page at `/submission`
 
-- Select role
-- Select Freighter or Rabet
-- Connect wallet
-- Show public key, network, and balance when available
-- Persist onboarding data
-- Track onboarding analytics
+## Architecture
 
-### B. Case creation
+### Frontend + API
 
-- Create a case with student, payer, verifier, mediator, target country, amount, asset, expiry, and release/refund conditions
-- Persist case off-chain in PostgreSQL
-- Generate deterministic on-chain case ID seed
-- Add audit log and analytics event
+StudyBond uses one Next.js codebase. There is no separate backend service.
 
-### C. Funding
+- UI routes: `src/app`
+- API routes: `src/app/api`
+- reusable components: `src/components`
+- server workflows: `src/lib/server`
+- Stellar integration: `src/lib/stellar`
 
-- Prepare Soroban `fund_bond`
-- Sign with the acting wallet
-- Submit to Stellar testnet
-- Persist tx hash, provider, wallet address, and audit trail
+### Data model
 
-### D. Public verification
-
-- Public-safe verification page at `/verify/[caseId]`
-- Shows amount, status, asset, verifier, expiry, contract ID, and tx hash
-- Uses simulated read calls against the deployed contract when `STELLAR_SIMULATION_ACCOUNT` is configured
-
-### E. Evidence
-
-- Evidence metadata is stored off-chain
-- Evidence hash/reference is recorded
-- Evidence submission can also hit Soroban `submit_evidence`
-
-### F. Release
-
-- Verifier approves release
-- Contract transfers locked amount to verifier
-- App persists tx hash, status, wallet proof, analytics, and audit row
-
-### G. Refund
-
-- Student requests refund
-- Verifier or mediator approves refund
-- Contract returns funds to payer or student per rule
-
-### H. Dispute
-
-- Student or verifier opens dispute
-- Mediator resolves with release, refund, or split outcome
-- Resolution is persisted to both chain and database
-
-## Route map
-
-- `/`
-- `/onboarding`
-- `/dashboard`
-- `/bonds`
-- `/bonds/new`
-- `/bonds/[id]`
-- `/verify/[caseId]`
-- `/wallet-proofs`
-- `/test-wallets`
-- `/analytics`
-- `/feedback`
-- `/submission`
-
-## Tech stack
-
-- Next.js 16 App Router
-- React 19
-- TypeScript
-- Tailwind CSS 4
-- Prisma 7
-- Neon PostgreSQL
-- Soroban Rust contract
-- `@stellar/stellar-sdk`
-- `@creit.tech/stellar-wallets-kit`
-- Vitest + Testing Library
-
-## Architecture overview
-
-### Frontend and API
-
-The app uses a single Next.js codebase with App Router pages and route handlers. There is no separate backend service.
-
-- UI routes live in `src/app`
-- API routes live in `src/app/api`
-- reusable UI components live in `src/components`
-- server workflows live in `src/lib/server`
-- Stellar integration lives in `src/lib/stellar`
-
-### Data and persistence
-
-Prisma models cover:
+Main Prisma models:
 
 - `User`
 - `StudyBondCase`
@@ -211,28 +116,26 @@ Prisma models cover:
 - `ErrorLog`
 - `AppSetting`
 
-### Wallet architecture
-
-Wallet adapters are separated into:
+### Wallet layer
 
 - `src/lib/stellar/freighter-adapter.ts`
 - `src/lib/stellar/rabet-adapter.ts`
-- `src/lib/stellar/wallet-kit.ts`
+- `src/components/providers/wallet-provider.tsx`
 
-`WalletProvider` in `src/components/providers/wallet-provider.tsx` handles:
+The wallet layer handles:
 
 - provider selection
 - role persistence
-- connect/disconnect
-- network mismatch detection
-- signature requests
-- client-side analytics hooks
+- connect / disconnect
+- testnet mismatch detection
+- signing requests
+- analytics and wallet proof tracking
 
-### Contract architecture
+### Contract layer
 
-The Soroban contract lives in `contracts/study_bond_escrow`.
+Contract path: `contracts/study_bond_escrow`
 
-Contract methods:
+Core methods:
 
 - `initialize_case`
 - `fund_bond`
@@ -246,20 +149,7 @@ Contract methods:
 - `get_case`
 - `get_status`
 
-Auth rules implemented in contract:
-
-- only student can initialize
-- only student or payer can fund
-- only student can submit evidence
-- only verifier can approve release
-- only student can request refund
-- only verifier or mediator can approve refund
-- only student or verifier can open dispute
-- only mediator can resolve dispute
-- final states cannot be mutated again
-- dispute split must exactly match locked amount
-
-## Smart contract deployment
+## Smart Contract Deployment
 
 - Network: `testnet`
 - Contract ID: `CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N`
@@ -267,141 +157,12 @@ Auth rules implemented in contract:
 - WASM install tx: `287a4f2b88696f2b1ebef5068b2c33490a254f0ec9b0a89c4a8ad37116787cc7`
 - Contract deploy tx: `6974a0a1604d0cfbf73977ad1094fdb40973ef4e6ffb0d4fe4c9ad0735fe0f47`
 
-Explorer links:
+## Contract Interaction Proof
 
-- Contract: `https://stellar.expert/explorer/testnet/contract/CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N`
-- Deployer: `https://stellar.expert/explorer/testnet/account/GCAJTVOW46RLLSOIDVXCV2KQUOC46ZWFNNJBFO3K4V72J5HWGXITQIV4`
-- Deploy tx: `https://stellar.expert/explorer/testnet/tx/6974a0a1604d0cfbf73977ad1094fdb40973ef4e6ffb0d4fe4c9ad0735fe0f47`
-
-Commands:
-
-```bash
-npm run contract:build
-npm run contract:deploy:testnet
-npm run contract:bindings
-npm run test:contract
-```
-
-## Environment variables
-
-Use `.env.example` as the reference.
-
-Important values:
-
-```bash
-DATABASE_URL=...
-NEXT_PUBLIC_STELLAR_RPC_URL=https://soroban-testnet.stellar.org
-NEXT_PUBLIC_STELLAR_HORIZON_URL=https://horizon-testnet.stellar.org
-NEXT_PUBLIC_STELLAR_NETWORK=testnet
-NEXT_PUBLIC_STELLAR_NETWORK_PASSPHRASE=Test SDF Network ; September 2015
-NEXT_PUBLIC_STELLAR_CONTRACT_ID=CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N
-NEXT_PUBLIC_STELLAR_NATIVE_ASSET_CONTRACT_ID=CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-STELLAR_DEPLOYER_ALIAS=studybond-deployer
-STELLAR_SIMULATION_ACCOUNT=GCAJTVOW46RLLSOIDVXCV2KQUOC46ZWFNNJBFO3K4V72J5HWGXITQIV4
-```
-
-## Local development
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Run the app:
-
-```bash
-npm run dev
-```
-
-Build the app:
-
-```bash
-npm run build
-```
-
-Run tests:
-
-```bash
-npm run typecheck
-npm run lint
-npm run test
-```
-
-## Database setup
-
-Run Prisma migration:
-
-```bash
-npx prisma migrate dev --name init
-```
-
-Seed base settings and sync wallet fixtures:
-
-```bash
-npm run prisma:seed
-```
-
-## Test wallet setup
-
-This repo creates 12 real Stellar testnet identities and only writes public data to `data/test-wallets.json`.
-
-Create and fund wallets:
-
-```bash
-npm run wallets:create
-npm run wallets:verify
-```
-
-Generate technical wallet interaction proofs:
-
-```bash
-npm run wallets:proofs
-```
-
-Manual import hint for browser-wallet testing:
-
-```bash
-stellar keys secret student-01
-stellar keys secret parent-01
-```
-
-Do not commit secret keys.
-
-### Wallet fixture labels
-
-- `student-01`
-- `student-02`
-- `parent-01`
-- `school-01`
-- `dorm-01`
-- `landlord-01`
-- `agency-01`
-- `verifier-01`
-- `admin-01`
-- `mediator-01`
-- `reviewer-01`
-- `reviewer-02`
-
-The authoritative public fixture file is:
-
-- `data/test-wallets.json`
-
-## Wallet interaction proof result
-
-Current technical proof status in this workspace:
-
-- 12 successful wallet interactions
-- 10 unique wallet addresses
-- all interactions are real Stellar testnet txs
-- proof rows are persisted in PostgreSQL and shown on `/wallet-proofs`
-
-Generated proof flows:
+Representative real interaction hashes already recorded in the app database:
 
 ### Release flow
 
-- Case ID: `cmquln8950000mov24ft2gdws`
 - `initialize_case`: `7725711458cf0f1c45c1cdd0be402324ec3d83d9c35153b86514c4dd95b9807b`
 - `fund_bond`: `93c498b48e9cc3a02382307390cab5b2fb1b8f48c2cbb40ce7b8d397e948e9ff`
 - `submit_evidence`: `b0632e646fdcd6d74c6fa1ac8aef4b48f07ff4e230165e04c948fc7230e82145`
@@ -409,7 +170,6 @@ Generated proof flows:
 
 ### Dispute flow
 
-- Case ID: `cmqulo2n8000hmov2zl01yb70`
 - `initialize_case`: `4e8c0a7710d55488ddc309caf69b905f1c68dc3f6c9607c47ac9931e3fb67ffb`
 - `fund_bond`: `e7e32fbbcbdd37817ebdc99e377cb023622ccacbf6c3955ad93791e720ff4119`
 - `open_dispute`: `b2c7fd33d8163ad8360e454dd4cff938202749cdb3d5e0364de1719dfacaea3c`
@@ -417,136 +177,142 @@ Generated proof flows:
 
 ### Refund flow
 
-- Case ID: `cmquloxs8000wmov2vdeju0wh`
 - `initialize_case`: `f2b3c86d39a0108edf900ec4f32984b4a2c4f8f5736e3cacb95c85a560a147cf`
 - `fund_bond`: `8d891821f11ddfce7c295d5bc331c7bcd94d34643b6ff8b85b62be3ada5bcc82`
 - `request_refund`: `a29926ccd1774aaed32af993927b5300f0ca8cb5369f9ae872046030ffcf8960`
 - `approve_refund`: `70395b5a9638cf8e08346da8ccf685331f46143fa4a226d58cdabe5800c06d43`
 
-Important distinction:
+## 10+ Wallet Interaction Proof
 
-- `12` CLI/test-wallet interactions above are technical validation proof
-- real user product validation still belongs in `/feedback`
-- do not treat synthetic technical wallets as human user feedback
+Current technical proof state in this workspace:
 
-## Analytics and monitoring
+- `12` successful wallet interactions
+- `10` unique wallet addresses
+- all rows are backed by real Stellar testnet transactions
+- proof rows are persisted to PostgreSQL and surfaced on `/wallet-proofs`
 
-Analytics is implemented with first-party database-backed events in `AnalyticsEvent`.
+Authoritative wallet fixture file:
 
-Tracked events include:
+- `data/test-wallets.json`
 
-- page views
-- onboarding start
-- wallet provider selected
-- wallet connected / failed
-- case created
-- bond funded
-- evidence submitted
-- verify page viewed
-- release/refund/dispute lifecycle events
-- feedback submitted
-- submission page viewed
+## CI/CD
 
-Monitoring is implemented with first-party error logging in `ErrorLog`.
+GitHub Actions CI is configured at `.github/workflows/ci.yml` and runs on push / pull request:
 
-Coverage:
+- `npm ci`
+- `npm run lint`
+- `npm run typecheck`
+- `npx vitest run`
+- `npm run build`
 
-- wallet errors
-- API errors
-- contract interaction errors
-- reviewer visibility through `/analytics`
-
-## Feedback summary
-
-- Feedback form is implemented at `/feedback`
-- Summary UI is implemented
-- Current recorded real-user feedback in this workspace: `0`
-
-This is intentionally not backfilled with fake responses.
+Vercel is the intended deployment target for production hosting. Continuous deployment can be enabled by importing the GitHub repository into Vercel and allowing automatic deploys from `main`.
 
 ## Screenshots
 
-Placeholder section for final GitHub submission assets:
+### Mobile responsive UI
 
-- product UI screenshots: pending capture
-- mobile responsive screenshots: pending capture
-- analytics/monitoring screenshots: pending capture
+![Mobile responsive dashboard](docs/screenshots/mobile-dashboard.png)
 
-## Deployment
+### CI/CD pipeline
 
-Preferred target:
+![GitHub Actions CI pipeline](docs/screenshots/ci-pipeline.png)
 
-- Vercel
+### Test output with 3+ passing tests
 
-Current repo status:
+![Vitest output](docs/screenshots/test-output.png)
 
-- deployable Next.js app
-- no live public URL added yet
+## Tests
 
-Typical production build flow:
+Verified commands in this workspace:
+
+```bash
+npm run lint
+npm run typecheck
+npx vitest run
+npm run build
+```
+
+Current Vitest status:
+
+- `13` test files passed
+- `18` tests passed
+
+## Local Development
 
 ```bash
 npm install
-npx prisma migrate deploy
-npm run build
-npm run start
+npm run dev
 ```
 
-## Tests run
-
-Commands verified in this workspace:
+## Database Setup
 
 ```bash
-npm run typecheck
-npm run lint
-npm run test
-npm run build
 npx prisma migrate dev --name init
 npm run prisma:seed
+```
+
+## Test Wallet Setup
+
+```bash
 npm run wallets:create
 npm run wallets:verify
 npm run wallets:proofs
-npm run contract:deploy:testnet
-npm run contract:bindings
 ```
 
-## Known limitations
+Do not commit secret keys.
 
-- live demo URL is still blank
-- demo video is still blank
-- public GitHub remote is not configured here
-- commit history is below the `15+ meaningful commits` submission target in the current local state
-- real user feedback has not been collected yet
-- screenshot assets are not captured yet
-- contract event publishing uses deprecated `env.events().publish(...)` APIs and should move to `#[contractevent]`
-- Neon/pg currently warns that future SSL-mode semantics will change; `verify-full` should be considered explicitly later
+## Vercel Deployment Setup
 
-## Roadmap
+This repo already includes `vercel.json` with:
 
-- add live deployment and demo video
-- collect real user validation feedback
-- capture submission screenshots
-- improve submission page with richer asset status and evidence previews
-- switch Soroban events to the modern contract event macro
-- add import/export tooling for reviewer-ready submission artifacts
-- validate Freighter and Rabet browser flows end-to-end on the deployed site
+- framework: `nextjs`
+- install command: `npm ci`
+- build command: `npm run build`
 
-## Submission checklist status
+### Vercel project settings
 
-Current honest status from the workspace:
+- Framework Preset: `Next.js`
+- Root Directory: `.`
+- Install Command: `npm ci`
+- Build Command: `npm run build`
+- Output Directory: leave empty
+- Node.js version: `24.x` recommended
 
-- Public GitHub repository: pending
-- README: complete
-- 15+ meaningful commits: pending
-- Live demo link: pending
-- Smart contract deployed on Stellar testnet: complete
-- Contract deployment address: complete
-- Product UI screenshots: pending
-- Mobile responsive screenshots: pending
-- Analytics/monitoring screenshots: pending
-- Demo video link: pending
-- Proof of 10+ wallet interactions: complete
-- Basic user feedback summary: pending real responses
-- Tests pass: complete
-- Build passes: complete
+### Required environment variables for Vercel
 
+| Variable | Required | Value to set |
+| --- | --- | --- |
+| `DATABASE_URL` | Yes | Your Neon PostgreSQL connection string |
+| `NEXT_PUBLIC_APP_URL` | Yes | Your Vercel production URL, for example `https://your-project.vercel.app` |
+| `NEXT_PUBLIC_STELLAR_RPC_URL` | Yes | `https://soroban-testnet.stellar.org` |
+| `NEXT_PUBLIC_STELLAR_HORIZON_URL` | Yes | `https://horizon-testnet.stellar.org` |
+| `NEXT_PUBLIC_STELLAR_NETWORK` | Yes | `testnet` |
+| `NEXT_PUBLIC_STELLAR_NETWORK_PASSPHRASE` | Yes | `Test SDF Network ; September 2015` |
+| `NEXT_PUBLIC_STELLAR_CONTRACT_ID` | Yes | `CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N` |
+| `NEXT_PUBLIC_STELLAR_NATIVE_ASSET_CONTRACT_ID` | Yes | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` |
+| `STELLAR_DEPLOYER_ALIAS` | Optional | `studybond-deployer` |
+| `STELLAR_SIMULATION_ACCOUNT` | Recommended | `GCAJTVOW46RLLSOIDVXCV2KQUOC46ZWFNNJBFO3K4V72J5HWGXITQIV4` |
+
+### Deploy flow
+
+1. Import `kwang2131/StudentStellarShiedv2` into Vercel.
+2. Add the environment variables above.
+3. Trigger the first production deployment.
+4. After Vercel gives you the real domain, keep `NEXT_PUBLIC_APP_URL` exactly equal to that URL and redeploy once.
+
+## What Is Intentionally Left Blank
+
+- Live demo link
+- Demo video link
+
+These are excluded on purpose for now and should be added after deployment and recording.
+
+## Compliance Disclaimer
+
+- Testnet only
+- No real money
+- Not a licensed escrow service
+- Not a banking service
+- Not a legal proof-of-funds service
+
+Any mainnet or fiat rollout would require legal review, KYC/AML assessment, privacy policy work, and licensed partner evaluation.

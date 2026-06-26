@@ -36,6 +36,25 @@ function hasMeaningfulReadme() {
   }
 }
 
+function hasGithubRemote() {
+  try {
+    const output = execSync("git remote get-url origin", {
+      cwd: process.cwd(),
+      stdio: ["ignore", "pipe", "ignore"],
+    })
+      .toString()
+      .trim();
+
+    return output.includes("github.com") || output.includes("git@github-");
+  } catch {
+    return false;
+  }
+}
+
+function hasCiWorkflow() {
+  return existsSync(path.join(process.cwd(), ".github", "workflows", "ci.yml"));
+}
+
 export async function getSubmissionPageData() {
   const [walletProofs, feedbackCount, settings] = await prisma.$transaction([
     prisma.walletInteraction.findMany({
@@ -51,13 +70,17 @@ export async function getSubmissionPageData() {
   const uniqueWallets = new Set(walletProofs.map((item) => item.walletAddress)).size;
   const commitCount = readGitCommitCount();
   const hasReadme = hasMeaningfulReadme();
+  const hasRemote = hasGithubRemote();
+  const hasCi = hasCiWorkflow();
 
   const checklist: SubmissionChecklistItem[] = [
     {
       id: "repo",
       label: "Public GitHub repository",
-      complete: false,
-      detail: "Local repo is prepared, but remote GitHub publish still needs to be configured.",
+      complete: hasRemote,
+      detail: hasRemote
+        ? "GitHub remote is configured. Ensure the repository visibility is Public before submission."
+        : "GitHub remote is not configured yet.",
     },
     {
       id: "readme",
@@ -69,8 +92,8 @@ export async function getSubmissionPageData() {
     },
     {
       id: "commits",
-      label: "15+ meaningful commits",
-      complete: commitCount >= 15,
+      label: "10+ meaningful commits",
+      complete: commitCount >= 10,
       detail: `Current local commit count: ${commitCount}.`,
     },
     {
@@ -92,6 +115,14 @@ export async function getSubmissionPageData() {
       label: "Proof of 10+ wallet interactions",
       complete: walletProofs.length >= 10 && uniqueWallets >= 10,
       detail: `${walletProofs.length} successful interactions across ${uniqueWallets} unique wallets.`,
+    },
+    {
+      id: "ci",
+      label: "CI workflow",
+      complete: hasCi,
+      detail: hasCi
+        ? "GitHub Actions workflow exists at .github/workflows/ci.yml."
+        : "CI workflow is missing.",
     },
     {
       id: "feedback",

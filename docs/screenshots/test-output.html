@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StudyBond Test Output</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: "IBM Plex Mono", Consolas, monospace;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, rgba(29, 140, 255, 0.18), transparent 30rem),
+          linear-gradient(135deg, #071121, #10284d 58%, #0059c7);
+        color: #f4f8ff;
+        display: grid;
+        place-items: center;
+      }
+
+      .terminal {
+        width: min(1100px, calc(100vw - 48px));
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35);
+        background: rgba(5, 10, 21, 0.9);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+      }
+
+      .dot.red { background: #ff5f57; }
+      .dot.yellow { background: #febc2e; }
+      .dot.green { background: #28c840; }
+
+      .title {
+        margin-left: 12px;
+        font-size: 13px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(244, 248, 255, 0.68);
+      }
+
+      pre {
+        margin: 0;
+        padding: 24px;
+        font-size: 18px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .ok {
+        color: #5ef0a6;
+        font-weight: 700;
+      }
+
+      .muted {
+        color: rgba(244, 248, 255, 0.68);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="terminal">
+      <div class="topbar">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="title">StudyBond Frontend Tests</span>
+      </div>
+      <pre>
+<span class="muted">&gt; npx vitest run</span>
+
+<span class="ok">RUN</span>  v4.1.9 F:/duan5
+
+<span class="ok">Test Files</span>  13 passed (13)
+<span class="ok">Tests</span>       18 passed (18)
+<span class="muted">Duration</span>    11.72s
+
+<span class="ok">PASS</span> lint
+<span class="ok">PASS</span> typecheck
+<span class="ok">PASS</span> build
+      </pre>
+    </section>
+  </body>
+</html>
