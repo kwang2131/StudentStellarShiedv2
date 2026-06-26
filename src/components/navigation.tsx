@@ -29,6 +29,12 @@ export interface AppNavigationItem {
 }
 
 interface RoleExperience {
+  actions: Array<{
+    description: string;
+    href: string;
+    icon: LucideIcon;
+    label: string;
+  }>;
   focus: string[];
   icon: LucideIcon;
   label: string;
@@ -133,6 +139,26 @@ export const appNavigation: AppNavigationItem[] = [
 
 const roleExperiences: Record<UserRole, RoleExperience> = {
   STUDENT: {
+    actions: [
+      {
+        description: "Open a tuition, dorm, rental, or visa proof flow.",
+        href: "/bonds/new",
+        icon: Files,
+        label: "Create your deposit case",
+      },
+      {
+        description: "Confirm your wallet interactions and hashes were recorded.",
+        href: "/wallet-proofs",
+        icon: WalletCards,
+        label: "Review wallet proof",
+      },
+      {
+        description: "Log user-facing friction or trust gaps after each step.",
+        href: "/feedback",
+        icon: MessageSquareQuote,
+        label: "Leave product feedback",
+      },
+    ],
     focus: [
       "Start a deposit case with the right destination",
       "Connect your live Stellar wallet for proof",
@@ -146,6 +172,26 @@ const roleExperiences: Record<UserRole, RoleExperience> = {
       "Student mode focuses on creating a case, funding it, and keeping public-safe proof ready for schools, dorms, or visa flows.",
   },
   PARENT_GUARDIAN: {
+    actions: [
+      {
+        description: "See whether student cases are funded, verified, or blocked.",
+        href: "/bonds",
+        icon: BriefcaseBusiness,
+        label: "Monitor student cases",
+      },
+      {
+        description: "Check the family wallet proof trail before any release decision.",
+        href: "/wallet-proofs",
+        icon: WalletCards,
+        label: "Inspect wallet activity",
+      },
+      {
+        description: "Capture feedback about clarity, trust, and payment confidence.",
+        href: "/feedback",
+        icon: MessageSquareQuote,
+        label: "Share trust feedback",
+      },
+    ],
     focus: [
       "Fund on behalf of the student from a separate wallet",
       "Monitor contract state and release conditions",
@@ -159,6 +205,26 @@ const roleExperiences: Record<UserRole, RoleExperience> = {
       "Parent mode prioritizes bond visibility, wallet evidence, and low-friction follow-up once the student has initiated the flow.",
   },
   INSTITUTION_VERIFIER: {
+    actions: [
+      {
+        description: "Audit active cases before approving release or refund paths.",
+        href: "/bonds",
+        icon: BriefcaseBusiness,
+        label: "Review active cases",
+      },
+      {
+        description: "Check telemetry across onboarding, proofs, and contract events.",
+        href: "/analytics",
+        icon: BarChart3,
+        label: "Watch operations telemetry",
+      },
+      {
+        description: "Prepare the reviewer-facing submission evidence deck.",
+        href: "/submission",
+        icon: ClipboardList,
+        label: "Open submission checklist",
+      },
+    ],
     focus: [
       "Review funding proof and case completeness",
       "Track operational metrics across active cases",
@@ -172,6 +238,26 @@ const roleExperiences: Record<UserRole, RoleExperience> = {
       "Verifier mode brings analytics, proof trails, and submission readiness closer so institutional reviewers can audit outcomes quickly.",
   },
   AGENCY: {
+    actions: [
+      {
+        description: "Start another student funding case without leaving the workspace.",
+        href: "/bonds/new",
+        icon: Files,
+        label: "Create a new cohort case",
+      },
+      {
+        description: "Track throughput, wallet issues, and case progress across students.",
+        href: "/analytics",
+        icon: BarChart3,
+        label: "Track cohort health",
+      },
+      {
+        description: "Verify that every funded student has a clean wallet evidence trail.",
+        href: "/wallet-proofs",
+        icon: WalletCards,
+        label: "Audit proof quality",
+      },
+    ],
     focus: [
       "Manage several student cases in parallel",
       "Move between creation, tracking, and analytics quickly",
@@ -185,6 +271,26 @@ const roleExperiences: Record<UserRole, RoleExperience> = {
       "Agency mode is tuned for throughput: create cases, monitor cohorts, and catch wallet or contract issues before they block a student.",
   },
   MEDIATOR: {
+    actions: [
+      {
+        description: "Inspect case history and prepare for dispute resolution.",
+        href: "/bonds",
+        icon: BriefcaseBusiness,
+        label: "Inspect disputed cases",
+      },
+      {
+        description: "Validate wallet evidence before resolving ambiguous outcomes.",
+        href: "/wallet-proofs",
+        icon: WalletCards,
+        label: "Verify wallet evidence",
+      },
+      {
+        description: "Collect the final artifacts needed for reviewer handoff.",
+        href: "/submission",
+        icon: ClipboardList,
+        label: "Prepare audit handoff",
+      },
+    ],
     focus: [
       "Inspect disputes and contract-side evidence",
       "Review wallet proofs before resolving edge cases",
@@ -198,6 +304,26 @@ const roleExperiences: Record<UserRole, RoleExperience> = {
       "Mediator mode highlights oversight, telemetry, and submission views so dispute resolution stays grounded in observable chain activity.",
   },
   ADMIN: {
+    actions: [
+      {
+        description: "Check overall telemetry and operating health in one place.",
+        href: "/analytics",
+        icon: BarChart3,
+        label: "Inspect platform telemetry",
+      },
+      {
+        description: "Review technical proof coverage and generated wallet rows.",
+        href: "/wallet-proofs",
+        icon: WalletCards,
+        label: "Inspect proof coverage",
+      },
+      {
+        description: "Open the reviewer checklist before shipping or demoing.",
+        href: "/submission",
+        icon: ClipboardList,
+        label: "Review readiness",
+      },
+    ],
     focus: [
       "Inspect the whole operating surface",
       "Monitor proof coverage and telemetry drift",
@@ -211,6 +337,26 @@ const roleExperiences: Record<UserRole, RoleExperience> = {
       "Admin mode exposes the full internal workspace and is kept only as a safe fallback for technical operators.",
   },
   REVIEWER: {
+    actions: [
+      {
+        description: "Start with the explicit submission and requirement checklist.",
+        href: "/submission",
+        icon: ClipboardList,
+        label: "Open the checklist",
+      },
+      {
+        description: "Inspect wallet proof rows and transaction evidence directly.",
+        href: "/wallet-proofs",
+        icon: WalletCards,
+        label: "Inspect proof evidence",
+      },
+      {
+        description: "Check telemetry and monitoring signals before scoring the project.",
+        href: "/analytics",
+        icon: BarChart3,
+        label: "Review telemetry",
+      },
+    ],
     focus: [
       "Audit end-to-end product readiness",
       "Inspect contract, telemetry, and proof evidence",
@@ -224,6 +370,26 @@ const roleExperiences: Record<UserRole, RoleExperience> = {
       "Reviewer mode is optimized for reading proof, telemetry, and readiness pages without exposing creator-first shortcuts.",
   },
   UNKNOWN: {
+    actions: [
+      {
+        description: "Start by picking a role and connecting the correct wallet.",
+        href: "/onboarding",
+        icon: Files,
+        label: "Begin onboarding",
+      },
+      {
+        description: "Understand the public value proposition before entering the app.",
+        href: "/",
+        icon: FileBadge,
+        label: "Read the landing page",
+      },
+      {
+        description: "Open the workspace once a role and wallet are selected.",
+        href: "/dashboard",
+        icon: Orbit,
+        label: "Enter mission control",
+      },
+    ],
     focus: [
       "Choose a role to unlock the right workspace",
       "Connect a real wallet before taking action",

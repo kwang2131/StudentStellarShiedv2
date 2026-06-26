@@ -4,6 +4,7 @@ import { BondCard } from "@/components/bond-card";
 import { EmptyState } from "@/components/empty-state";
 import { MetricCard } from "@/components/metric-card";
 import { PageIntro } from "@/components/page-intro";
+import { RoleCommandCenter } from "@/components/role-command-center";
 import { Button } from "@/components/ui/button";
 import { getDashboardData } from "@/lib/server/dashboard";
 import { serializeBondCase } from "@/lib/presenters";
@@ -30,6 +31,8 @@ export default async function DashboardPage() {
         eyebrow="Operations"
         title="StudyBond control center"
       />
+
+      <RoleCommandCenter />
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard hint="Cases created in the app database." label="Total cases" value={data.totals.totalCases} />
