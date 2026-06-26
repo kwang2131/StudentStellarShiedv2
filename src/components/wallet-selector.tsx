@@ -20,8 +20,8 @@ export function WalletSelector() {
           <button
             key={item.value}
             className={cn(
-              "surface-panel rounded-[1.5rem] p-5 text-left transition",
-              isActive && "border-brand bg-brand-soft/50",
+              "surface-panel orb-ring rounded-[1.6rem] p-5 text-left transition duration-200 hover:-translate-y-0.5",
+              isActive && "border-brand bg-brand-soft/40 shadow-[0_18px_44px_rgba(0,89,199,0.16)]",
             )}
             onClick={() => {
               setProvider(item.value);
@@ -39,21 +39,43 @@ export function WalletSelector() {
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
+                <p className="display-eyebrow text-xs text-muted">
                   {item.shortLabel}
                 </p>
-                <h3 className="mt-2 text-xl font-semibold">{item.label}</h3>
-                <p className="mt-2 text-sm text-muted">
+                <h3 className="display-title mt-2 text-xl font-semibold">{item.label}</h3>
+                <p className="mt-2 text-sm leading-7 text-muted">
                   {installed
                     ? "Extension detected in this browser."
                     : "Extension not detected. Install before using live signing."}
                 </p>
               </div>
-              {installed ? (
-                <CheckCircle2 className="size-5 text-success" />
-              ) : (
-                <AlertCircle className="size-5 text-warning" />
-              )}
+              <span
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold",
+                  installed
+                    ? "bg-success/12 text-success"
+                    : "bg-warning/12 text-warning",
+                )}
+              >
+                {installed ? (
+                  <CheckCircle2 className="size-4" />
+                ) : (
+                  <AlertCircle className="size-4" />
+                )}
+                {installed ? "Installed" : "Install required"}
+              </span>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="rounded-full border border-border bg-white/75 px-3 py-1 text-xs font-semibold text-muted">
+                Browser extension
+              </span>
+              <span className="rounded-full border border-border bg-white/75 px-3 py-1 text-xs font-semibold text-muted">
+                Live Stellar signing
+              </span>
+              <span className="rounded-full border border-border bg-white/75 px-3 py-1 text-xs font-semibold text-muted">
+                Testnet compatible
+              </span>
             </div>
 
             {!installed ? (
@@ -66,7 +88,11 @@ export function WalletSelector() {
                 <Download className="size-4" />
                 Install {item.label}
               </a>
-            ) : null}
+            ) : (
+              <p className="mt-4 text-sm font-semibold text-brand-ink">
+                Ready for wallet connection and contract signing.
+              </p>
+            )}
           </button>
         );
       })}
