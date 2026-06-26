@@ -1,0 +1,134 @@
+[
+  {
+    "label": "student-01",
+    "publicKey": "GCDO67PZHLUKNJZM6MQ3TE4UXUF23NPXBEMW7NGYCWE56Y45SG4U74SM",
+    "suggestedRole": "STUDENT",
+    "funded": true,
+    "balance": "9999.9442121",
+    "lastInteraction": "2026-06-26T07:18:37Z",
+    "lastTxHash": "b0632e646fdcd6d74c6fa1ac8aef4b48f07ff4e230165e04c948fc7230e82145",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "student-02",
+    "publicKey": "GAPE4JXL4WOTJPSL5SHHQS3KZWRS23QBXPCN3XHUOQENC7XDMBVGHRDJ",
+    "suggestedRole": "STUDENT",
+    "funded": true,
+    "balance": "9999.9480110",
+    "lastInteraction": "2026-06-26T07:18:57Z",
+    "lastTxHash": "4e8c0a7710d55488ddc309caf69b905f1c68dc3f6c9607c47ac9931e3fb67ffb",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "parent-01",
+    "publicKey": "GBI5PHDOIUMMTCFYRCSTACTIDV6C25FAOSNWGO76FBOIIIDDZGJBUL6X",
+    "suggestedRole": "PARENT_GUARDIAN",
+    "funded": true,
+    "balance": "9998.9491208",
+    "lastInteraction": "2026-06-26T07:18:27Z",
+    "lastTxHash": "93c498b48e9cc3a02382307390cab5b2fb1b8f48c2cbb40ce7b8d397e948e9ff",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "school-01",
+    "publicKey": "GAGGH4ZJJZCQDVXNXL6R5AYARFADLICBKUR4P2JKB2ZXX63CKSYCDOST",
+    "suggestedRole": "INSTITUTION_VERIFIER",
+    "funded": true,
+    "balance": "10000.9964562",
+    "lastInteraction": "2026-06-26T07:18:47Z",
+    "lastTxHash": "9eda966b6791ced2acc71a7fe88352b1c98eb15fab705f0c19e9719e563d7044",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "dorm-01",
+    "publicKey": "GCPVL5VNQQFIBT2AMSCZTU2QT2SSTGR6UJBOWXRU5445P2CZ3IO6H45N",
+    "suggestedRole": "INSTITUTION_VERIFIER",
+    "funded": true,
+    "balance": "10000.5967903",
+    "lastInteraction": "2026-06-26T07:19:27Z",
+    "lastTxHash": "f91b668fa0d0e36e272f25cd2065e322a5100e2e1cff6ba6010818e820335124",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "landlord-01",
+    "publicKey": "GCT6YVSCRBAISRVZQVEWSMKTS6RGG3JAZHJVZZKN6TQML6JZGAS2ZTQE",
+    "suggestedRole": "INSTITUTION_VERIFIER",
+    "funded": true,
+    "balance": "9999.9952984",
+    "lastInteraction": "2026-06-26T07:19:27Z",
+    "lastTxHash": "f91b668fa0d0e36e272f25cd2065e322a5100e2e1cff6ba6010818e820335124",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "agency-01",
+    "publicKey": "GBYK6E4LZQX3HAPHV2CMBQJSXWFJVPIFXO6JMZYDNZBP2YJJT62C336O",
+    "suggestedRole": "AGENCY",
+    "funded": true,
+    "balance": "9999.3956854",
+    "lastInteraction": "2026-06-26T07:19:27Z",
+    "lastTxHash": "f91b668fa0d0e36e272f25cd2065e322a5100e2e1cff6ba6010818e820335124",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "verifier-01",
+    "publicKey": "GC5XZZMOLKKSOT77YWA4A6WNSJV2PJHP6CY2OZGIVSEKF3AOGQZ2CNNR",
+    "suggestedRole": "INSTITUTION_VERIFIER",
+    "funded": true,
+    "balance": "9999.9976348",
+    "lastInteraction": "2026-06-26T07:20:07Z",
+    "lastTxHash": "70395b5a9638cf8e08346da8ccf685331f46143fa4a226d58cdabe5800c06d43",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "admin-01",
+    "publicKey": "GCVH6ZYZFZX7B6E4K6LCNY3Z73CVAXRAUQ37SK6G2AWNX4LWRLRZXWJ5",
+    "suggestedRole": "ADMIN",
+    "funded": true,
+    "balance": "9999.9444074",
+    "lastInteraction": "2026-06-26T07:19:57Z",
+    "lastTxHash": "a29926ccd1774aaed32af993927b5300f0ca8cb5369f9ae872046030ffcf8960",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "mediator-01",
+    "publicKey": "GDFFV7DHISJIWGEV2XX745NHR6D2G3QSWP2URKC3U2F7F4CM5FW73K63",
+    "suggestedRole": "MEDIATOR",
+    "funded": true,
+    "balance": "10000.0000000",
+    "lastInteraction": "2026-06-26T07:01:45Z",
+    "lastTxHash": "9d95188c6e9b01a94ad8e9702e66b7b2eff53c98158aeb7b3a95cfba0d2abc03",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "reviewer-01",
+    "publicKey": "GA66BKFYBKKZYORMIBRXAP6QFMJVWZPRRUOJO6S224N5RJT2PWCY2LLB",
+    "suggestedRole": "REVIEWER",
+    "funded": true,
+    "balance": "9999.9956854",
+    "lastInteraction": "2026-06-26T07:20:07Z",
+    "lastTxHash": "70395b5a9638cf8e08346da8ccf685331f46143fa4a226d58cdabe5800c06d43",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  },
+  {
+    "label": "reviewer-02",
+    "publicKey": "GBRD4M5WMRFMWHZJSM3MQRHKPRW46JYHZXOFYFK7OQOM2KGMTZRMRVG2",
+    "suggestedRole": "REVIEWER",
+    "funded": true,
+    "balance": "10000.0000000",
+    "lastInteraction": "2026-06-26T07:02:00Z",
+    "lastTxHash": "686d13f84248388556ef7e630eeadf6bad5bbe1ac05dda7278194e93b5c0cf0e",
+    "walletProvider": "CLI",
+    "usedInApp": true
+  }
+]

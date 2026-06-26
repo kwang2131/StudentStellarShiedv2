@@ -1,0 +1,269 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  STUDENT
+  PARENT_GUARDIAN
+  INSTITUTION_VERIFIER
+  AGENCY
+  MEDIATOR
+  ADMIN
+  REVIEWER
+  UNKNOWN
+}
+
+enum WalletProvider {
+  FREIGHTER
+  RABET
+  MOCK
+  CLI
+}
+
+enum CaseType {
+  TUITION_DEPOSIT
+  DORM_DEPOSIT
+  RENTAL_DEPOSIT
+  VISA_PROOF_OF_FUNDS
+}
+
+enum CaseStatus {
+  CREATED
+  FUNDED
+  VERIFICATION_PENDING
+  EVIDENCE_SUBMITTED
+  RELEASE_APPROVED
+  REFUND_REQUESTED
+  DISPUTED
+  RELEASED
+  REFUNDED
+  EXPIRED
+  CLOSED
+}
+
+enum EvidenceCategory {
+  ADMISSION_LETTER
+  DORM_RESERVATION
+  RENTAL_OFFER
+  VISA_APPOINTMENT
+  PASSPORT_REFERENCE
+  SUPPORTING_NOTE
+  OTHER
+}
+
+enum AnalyticsEventName {
+  PAGE_VIEW
+  ONBOARDING_STARTED
+  WALLET_PROVIDER_SELECTED
+  WALLET_CONNECT_CLICKED
+  WALLET_CONNECTED
+  WALLET_CONNECTION_FAILED
+  CASE_CREATED
+  BOND_INITIALIZED_ONCHAIN
+  BOND_FUNDED
+  EVIDENCE_SUBMITTED
+  VERIFY_PAGE_VIEWED
+  RELEASE_APPROVED
+  REFUND_REQUESTED
+  REFUND_APPROVED
+  DISPUTE_OPENED
+  DISPUTE_RESOLVED
+  FEEDBACK_SUBMITTED
+  TEST_WALLET_FUNDED
+  SUBMISSION_PAGE_VIEWED
+  WALLET_DISCONNECTED
+  ERROR_CAPTURED
+}
+
+model User {
+  id                  String              @id @default(cuid())
+  role                UserRole
+  name                String?
+  email               String?
+  walletAddress       String              @unique
+  walletProvider      WalletProvider
+  onboardingCompleted Boolean             @default(false)
+  targetCountry       String?
+  useCase             String?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  analyticsEvents     AnalyticsEvent[]
+  feedback            Feedback[]
+  walletInteractions  WalletInteraction[]
+
+  @@index([role])
+}
+
+model StudyBondCase {
+  id                    String              @id @default(cuid())
+  onchainCaseId         String              @unique
+  caseType              CaseType
+  studentName           String
+  studentWalletAddress  String
+  payerWalletAddress    String?
+  verifierName          String
+  verifierWalletAddress String
+  mediatorWalletAddress String
+  targetCountry         String
+  amount                Decimal             @db.Decimal(20, 7)
+  assetCode             String
+  assetContractAddress  String
+  status                CaseStatus          @default(CREATED)
+  contractAddress       String?
+  initializeTxHash      String?
+  fundTxHash            String?
+  releaseTxHash         String?
+  refundTxHash          String?
+  disputeTxHash         String?
+  resolutionTxHash      String?
+  expiryDate            DateTime
+  releaseCondition      String
+  refundCondition       String
+  notes                 String?
+  fundingWalletProvider WalletProvider?
+  settledStudentAmount  Decimal?            @db.Decimal(20, 7)
+  settledVerifierAmount Decimal?            @db.Decimal(20, 7)
+  lastContractState     Json?
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  auditLogs             AuditLog[]
+  evidenceFiles         EvidenceFile[]
+  walletInteractions    WalletInteraction[]
+
+  @@index([status])
+  @@index([caseType])
+  @@index([studentWalletAddress])
+  @@index([verifierWalletAddress])
+}
+
+model EvidenceFile {
+  id               String           @id @default(cuid())
+  caseId           String
+  category         EvidenceCategory
+  fileName         String
+  fileUrl          String
+  fileHash         String
+  description      String?
+  relatedCondition String?
+  uploadedByRole   UserRole
+  uploadedByWallet String
+  createdAt        DateTime         @default(now())
+  case             StudyBondCase    @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId, createdAt])
+}
+
+model WalletInteraction {
+  id              String          @id @default(cuid())
+  userId          String?
+  caseId          String?
+  walletAddress   String
+  walletProvider  WalletProvider
+  role            UserRole
+  action          String
+  txHash          String?
+  contractAddress String?
+  success         Boolean         @default(false)
+  errorMessage    String?
+  metadata        Json?
+  createdAt       DateTime        @default(now())
+  user            User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  case            StudyBondCase?  @relation(fields: [caseId], references: [id], onDelete: SetNull)
+
+  @@index([walletAddress, createdAt])
+  @@index([caseId, createdAt])
+  @@index([success, createdAt])
+}
+
+model AuditLog {
+  id          String         @id @default(cuid())
+  caseId      String
+  actorRole   UserRole
+  actorWallet String
+  action      String
+  message     String
+  txHash      String?
+  metadata    Json?
+  createdAt   DateTime       @default(now())
+  case        StudyBondCase  @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId, createdAt])
+}
+
+model Feedback {
+  userId         String?
+  id            String    @id @default(cuid())
+  role          UserRole
+  walletAddress String?
+  rating        Int
+  workedWell    String
+  confusing     String
+  wouldUse      Boolean
+  comment       String?
+  contact       String?
+  createdAt     DateTime  @default(now())
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+}
+
+model AnalyticsEvent {
+  id             String             @id @default(cuid())
+  userId         String?
+  eventName      AnalyticsEventName
+  role           UserRole?
+  walletAddress  String?
+  walletProvider WalletProvider?
+  path           String?
+  metadata       Json?
+  createdAt      DateTime           @default(now())
+  user           User?              @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([eventName, createdAt])
+  @@index([path, createdAt])
+}
+
+model TestWallet {
+  id               String          @id @default(cuid())
+  label            String          @unique
+  publicKey        String          @unique
+  suggestedRole    UserRole
+  funded           Boolean         @default(false)
+  balance          Decimal?        @db.Decimal(20, 7)
+  lastInteraction  String?
+  lastTxHash       String?
+  walletProvider   WalletProvider?
+  usedInApp        Boolean         @default(false)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@index([suggestedRole])
+}
+
+model ErrorLog {
+  id            String    @id @default(cuid())
+  scope         String
+  message       String
+  detail        String?
+  path          String?
+  walletAddress String?
+  caseId        String?
+  metadata      Json?
+  createdAt     DateTime  @default(now())
+
+  @@index([scope, createdAt])
+}
+
+model AppSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String?
+  jsonValue Json?
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
