@@ -1,52 +1,65 @@
-import { StellarWalletsKit } from "@creit.tech/stellar-wallets-kit/sdk";
-import { RabetModule } from "@creit.tech/stellar-wallets-kit/modules/rabet";
-
 import { stellarConfig } from "@/lib/stellar/config";
 import { getNativeBalance } from "@/lib/stellar/horizon-client";
-import { initializeWalletKit, selectWallet } from "@/lib/stellar/wallet-kit";
 import type { WalletAdapter } from "@/lib/stellar/types";
 
-const moduleInstance = new RabetModule();
+function getRabet() {
+  return typeof window === "undefined" ? undefined : window.rabet;
+}
 
 export const rabetAdapter: WalletAdapter = {
   provider: "RABET",
   async isAvailable() {
-    return moduleInstance.isAvailable();
+    return Boolean(getRabet());
   },
   async connect() {
-    initializeWalletKit();
-    await selectWallet("RABET");
-    const { address } = await StellarWalletsKit.fetchAddress();
-    const network = await this.getNetwork();
-    const balance = await this.getBalance(address);
+    const rabet = getRabet();
+
+    if (!rabet) {
+      throw new Error("Rabet is not available in this browser. Install or unlock Rabet and switch to Stellar testnet.");
+    }
+
+    const response = await rabet.connect();
+    const publicKey = response.publicKey?.trim();
+
+    if (!publicKey) {
+      throw new Error("Rabet did not return a wallet address.");
+    }
+
+    const balance = await this.getBalance(publicKey);
 
     return {
       balance,
-      network: network.network,
-      networkPassphrase: network.networkPassphrase,
+      network: stellarConfig.network,
+      networkPassphrase: stellarConfig.networkPassphrase,
       provider: "RABET",
-      publicKey: address,
+      publicKey,
     };
   },
   async disconnect() {
-    await StellarWalletsKit.disconnect();
+    // Rabet manages connection state inside the extension. Clearing local session is enough here.
   },
   async getNetwork() {
-    try {
-      return await moduleInstance.getNetwork();
-    } catch {
-      return {
-        network: stellarConfig.network,
-        networkPassphrase: stellarConfig.networkPassphrase,
-      };
-    }
-  },
-  async signTransaction(xdr, address) {
-    await selectWallet("RABET");
-    return StellarWalletsKit.signTransaction(xdr, {
-      address,
+    return {
+      network: stellarConfig.network,
       networkPassphrase: stellarConfig.networkPassphrase,
-    });
+    };
+  },
+  async signTransaction(xdr) {
+    const rabet = getRabet();
+
+    if (!rabet) {
+      throw new Error("Rabet is not available in this browser.");
+    }
+
+    const response = await rabet.sign(xdr, "testnet");
+
+    if (!response.xdr) {
+      throw new Error("Rabet failed to sign the transaction.");
+    }
+
+    return {
+      signedTxXdr: response.xdr,
+    };
   },
   async getBalance(publicKey) {
     return getNativeBalance(publicKey);
