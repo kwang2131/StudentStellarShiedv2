@@ -14,17 +14,17 @@ export function MetricCard({
   value: number | string;
 }) {
   return (
-    <article className="surface-panel rounded-[1.75rem] p-5">
+    <article className="surface-panel orb-ring rounded-[1.75rem] p-5">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted">
             {label}
           </p>
-          <p className="mt-3 text-3xl font-semibold tracking-tight text-foreground">
+          <p className="display-title mt-3 text-3xl font-semibold text-foreground">
             {typeof value === "number" ? formatNumber(value) : value}
           </p>
         </div>
-        <div className="rounded-full bg-brand-soft p-2 text-brand">
+        <div className="rounded-full bg-[linear-gradient(135deg,var(--brand-soft),rgba(0,194,168,0.18))] p-2 text-brand">
           <ArrowUpRight className="size-4" />
         </div>
       </div>
