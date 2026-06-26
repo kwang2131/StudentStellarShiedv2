@@ -28,7 +28,7 @@ describe("landing page", () => {
 
     expect(
       screen.getByRole("heading", {
-        name: /cross-border student deposits with a visible rulebook/i,
+        name: /cross-border deposits that show what the money is for/i,
       }),
     ).toBeInTheDocument();
     expect(screen.getAllByText(/Freighter/i).length).toBeGreaterThan(0);
