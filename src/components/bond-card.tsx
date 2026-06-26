@@ -33,13 +33,13 @@ export function BondCard({
   verifierName,
 }: BondCardProps) {
   return (
-    <article className="surface-panel rounded-[1.75rem] p-5">
+    <article className="surface-panel orb-ring rounded-[1.75rem] p-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted">
+          <p className="display-eyebrow text-xs text-muted">
             {caseType.replaceAll("_", " ")}
           </p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight">{studentName}</h2>
+          <h2 className="display-title mt-2 text-2xl font-semibold">{studentName}</h2>
           <p className="mt-2 text-sm text-muted">
             {truncateAddress(studentWalletAddress, 6)} · verified by {verifierName}
           </p>
@@ -48,13 +48,13 @@ export function BondCard({
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <div className="rounded-[1.25rem] bg-brand-soft/55 p-4">
+        <div className="rounded-[1.35rem] bg-[linear-gradient(135deg,rgba(217,235,255,0.82),rgba(255,255,255,0.78))] p-4">
           <p className="text-xs uppercase tracking-[0.18em] text-muted">Locked amount</p>
-          <p className="mt-2 text-2xl font-semibold text-foreground">
+          <p className="display-title mt-2 text-2xl font-semibold text-foreground">
             {formatMoney(amount, assetCode, 2)}
           </p>
         </div>
-        <div className="rounded-[1.25rem] border border-border bg-white/75 p-4">
+        <div className="rounded-[1.35rem] border border-border bg-white/80 p-4">
           <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-muted">
             <MapPinned className="size-4" />
             Destination
@@ -67,7 +67,7 @@ export function BondCard({
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
         <TransactionHashLink hash={fundTxHash} label="Funding tx" />
         <Link
-          className="inline-flex items-center gap-2 text-sm font-semibold text-brand"
+          className="inline-flex items-center gap-2 rounded-full border border-brand/14 bg-brand-soft/65 px-4 py-2 text-sm font-semibold text-brand-ink transition hover:border-brand/22 hover:bg-brand-soft"
           href={`/bonds/${id}`}
         >
           Open case
