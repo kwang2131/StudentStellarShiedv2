@@ -6,6 +6,7 @@ import { type UseFormReturn, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { getRoleExperience } from "@/components/navigation";
 import { Button } from "@/components/ui/button";
 import { useWallet } from "@/components/providers/wallet-provider";
 import { fetchJson } from "@/lib/client/fetch-json";
@@ -15,6 +16,7 @@ import { feedbackSchema, type FeedbackInput } from "@/lib/server/validators";
 export function FeedbackForm() {
   const router = useRouter();
   const { role, session } = useWallet();
+  const experience = getRoleExperience(role);
   type FeedbackFormValues = z.input<typeof feedbackSchema>;
   const form = useForm<FeedbackFormValues, unknown, FeedbackInput>({
     resolver: zodResolver(feedbackSchema),
@@ -55,12 +57,23 @@ export function FeedbackForm() {
   });
 
   return (
-    <form className="surface-panel space-y-4 rounded-[1.75rem] p-5" onSubmit={submit}>
+    <form className="surface-panel space-y-5 rounded-[1.85rem] p-5" onSubmit={submit}>
       <div>
-        <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted">
-          Product validation
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="display-eyebrow text-xs text-muted">Product validation</p>
+          <span className="rounded-full border border-brand/14 bg-brand-soft/60 px-3 py-1 text-xs font-semibold text-brand-ink">
+            {experience.label}
+          </span>
+          {session ? (
+            <span className="rounded-full border border-success/14 bg-success/10 px-3 py-1 text-xs font-semibold text-success">
+              Wallet connected
+            </span>
+          ) : null}
+        </div>
+        <h3 className="display-title mt-2 text-2xl font-semibold">Share what worked and what did not</h3>
+        <p className="mt-2 text-sm leading-7 text-muted">
+          Feedback stays separate from wallet proof so product signal can be reviewed without mixing it with onchain evidence.
         </p>
-        <h3 className="mt-2 text-2xl font-semibold">Share what worked and what did not</h3>
       </div>
 
       <label className="space-y-2">
@@ -75,22 +88,29 @@ export function FeedbackForm() {
       </label>
 
       <FormInput form={form} label="Wallet address" name="walletAddress" />
-      <FormInput form={form} label="Rating (1-5)" name="rating" type="number" />
+      <div className="grid gap-4 md:grid-cols-[180px_minmax(0,1fr)]">
+        <FormInput form={form} label="Rating (1-5)" name="rating" type="number" />
+        <label className="flex items-center gap-3 rounded-[1.5rem] border border-border bg-white px-4 py-3">
+          <input type="checkbox" {...form.register("wouldUse")} />
+          <span className="text-sm text-foreground">
+            I would use this for a real proof-of-funds or deposit workflow.
+          </span>
+        </label>
+      </div>
+
       <FormTextarea form={form} label="What worked well" name="workedWell" />
       <FormTextarea form={form} label="What was confusing" name="confusing" />
       <FormTextarea form={form} label="Comment" name="comment" />
       <FormInput form={form} label="Optional contact" name="contact" />
 
-      <label className="flex items-center gap-3 rounded-2xl border border-border bg-white px-4 py-3">
-        <input type="checkbox" {...form.register("wouldUse")} />
-        <span className="text-sm text-foreground">
-          I would use this for a real proof-of-funds or deposit workflow.
-        </span>
-      </label>
-
-      <Button disabled={form.formState.isSubmitting} type="submit">
-        {form.formState.isSubmitting ? "Submitting..." : "Submit feedback"}
-      </Button>
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-[1.55rem] border border-brand/14 bg-[linear-gradient(135deg,rgba(217,235,255,0.82),rgba(255,255,255,0.94))] p-4">
+        <p className="max-w-xl text-sm leading-7 text-muted">
+          Use this form for product clarity, trust, and workflow feedback. Technical wallet and contract proof belong on the proof and analytics surfaces.
+        </p>
+        <Button disabled={form.formState.isSubmitting} type="submit">
+          {form.formState.isSubmitting ? "Submitting..." : "Submit feedback"}
+        </Button>
+      </div>
     </form>
   );
 }

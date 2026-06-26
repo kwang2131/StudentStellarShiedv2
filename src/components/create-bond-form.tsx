@@ -7,6 +7,7 @@ import { type UseFormReturn, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { getRoleExperience } from "@/components/navigation";
 import { Button } from "@/components/ui/button";
 import { useWallet } from "@/components/providers/wallet-provider";
 import { fetchJson } from "@/lib/client/fetch-json";
@@ -23,6 +24,8 @@ function defaultExpiryDate() {
 export function CreateBondForm() {
   const router = useRouter();
   const { role, session } = useWallet();
+  const experience = getRoleExperience(role);
+  const canCreate = role === "STUDENT" || role === "PARENT_GUARDIAN" || role === "AGENCY";
   type CreateBondFormValues = z.input<typeof createBondSchema>;
 
   const form = useForm<CreateBondFormValues, unknown, CreateBondInput>({
@@ -52,7 +55,7 @@ export function CreateBondForm() {
       return;
     }
 
-    if (role !== "STUDENT" && role !== "PARENT_GUARDIAN" && role !== "AGENCY") {
+    if (!canCreate) {
       toast.error("Switch to Student, Parent / Guardian, or Agency to create a case.");
       return;
     }
@@ -79,39 +82,75 @@ export function CreateBondForm() {
 
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
-      <div className="grid gap-4 md:grid-cols-2">
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-muted">Case type</span>
-          <select className="w-full rounded-2xl border border-border bg-white px-4 py-3" {...form.register("caseType")}>
-            {CASE_TYPE_OPTIONS.map((item) => (
-              <option key={item.value} value={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <Field label="Student name" name="studentName" form={form} />
-        <Field label="Student wallet address" name="studentWalletAddress" form={form} />
-        <Field label="Payer wallet address" name="payerWalletAddress" form={form} />
-        <Field label="Verifier name" name="verifierName" form={form} />
-        <Field label="Verifier wallet address" name="verifierWalletAddress" form={form} />
-        <Field label="Mediator wallet address" name="mediatorWalletAddress" form={form} />
-        <Field label="Target country" name="targetCountry" form={form} />
-        <Field label="Amount" name="amount" form={form} type="number" />
-        <Field label="Asset code" name="assetCode" form={form} />
-        <Field label="Asset contract address" name="assetContractAddress" form={form} />
-        <Field label="Expiry date" name="expiryDate" form={form} type="datetime-local" />
-      </div>
+      <section className="surface-panel rounded-[1.85rem] p-5">
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="display-eyebrow text-xs text-muted">Case creation</p>
+          <span className="rounded-full border border-brand/14 bg-brand-soft/60 px-3 py-1 text-xs font-semibold text-brand-ink">
+            {experience.label}
+          </span>
+          <span
+            className={`rounded-full px-3 py-1 text-xs font-semibold ${
+              canCreate
+                ? "border border-success/14 bg-success/10 text-success"
+                : "border border-warning/14 bg-warning/10 text-warning"
+            }`}
+          >
+            {canCreate ? "Role can create cases" : "Role cannot create cases"}
+          </span>
+        </div>
+        <h2 className="display-title mt-2 text-2xl font-semibold">Open a new StudyBond case</h2>
+        <p className="mt-2 max-w-3xl text-sm leading-7 text-muted">
+          Define the parties, amount, release conditions, and expiry window before triggering contract initialization from the case detail page.
+        </p>
+      </section>
 
-      <TextAreaField label="Release condition" name="releaseCondition" form={form} />
-      <TextAreaField label="Refund condition" name="refundCondition" form={form} />
-      <TextAreaField label="Notes" name="notes" form={form} rows={4} />
+      <section className="surface-panel rounded-[1.85rem] p-5">
+        <p className="display-eyebrow text-xs text-muted">Case profile</p>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          <label className="space-y-2">
+            <span className="text-sm font-medium text-muted">Case type</span>
+            <select className="w-full rounded-2xl border border-border bg-white px-4 py-3" {...form.register("caseType")}>
+              {CASE_TYPE_OPTIONS.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <Field label="Target country" name="targetCountry" form={form} />
+          <Field label="Amount" name="amount" form={form} type="number" />
+          <Field label="Asset code" name="assetCode" form={form} />
+          <Field label="Asset contract address" name="assetContractAddress" form={form} />
+          <Field label="Expiry date" name="expiryDate" form={form} type="datetime-local" />
+        </div>
+      </section>
 
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-[1.5rem] border border-brand/20 bg-brand-soft/55 p-4">
-        <p className="max-w-xl text-sm text-muted">
+      <section className="surface-panel rounded-[1.85rem] p-5">
+        <p className="display-eyebrow text-xs text-muted">Participants</p>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          <Field label="Student name" name="studentName" form={form} />
+          <Field label="Student wallet address" name="studentWalletAddress" form={form} />
+          <Field label="Payer wallet address" name="payerWalletAddress" form={form} />
+          <Field label="Verifier name" name="verifierName" form={form} />
+          <Field label="Verifier wallet address" name="verifierWalletAddress" form={form} />
+          <Field label="Mediator wallet address" name="mediatorWalletAddress" form={form} />
+        </div>
+      </section>
+
+      <section className="surface-panel rounded-[1.85rem] p-5">
+        <p className="display-eyebrow text-xs text-muted">Settlement logic</p>
+        <div className="mt-4 space-y-4">
+          <TextAreaField label="Release condition" name="releaseCondition" form={form} />
+          <TextAreaField label="Refund condition" name="refundCondition" form={form} />
+          <TextAreaField label="Notes" name="notes" form={form} rows={4} />
+        </div>
+      </section>
+
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-[1.55rem] border border-brand/16 bg-[linear-gradient(135deg,rgba(217,235,255,0.84),rgba(255,255,255,0.94))] p-4 shadow-[0_18px_40px_rgba(0,89,199,0.08)]">
+        <p className="max-w-xl text-sm leading-7 text-muted">
           The main flow expects live Freighter or Rabet signing. Contract initialization can be triggered from the case detail page once the global contract id is configured.
         </p>
-        <Button disabled={form.formState.isSubmitting} type="submit">
+        <Button disabled={form.formState.isSubmitting || !canCreate} type="submit">
           {form.formState.isSubmitting ? "Creating..." : "Create StudyBond"}
         </Button>
       </div>
