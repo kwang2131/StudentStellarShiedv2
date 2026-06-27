@@ -10,6 +10,7 @@ Proof-of-funds and conditional deposit rail for international students on Stella
 ## Submission Snapshot
 
 - Public GitHub repository: `https://github.com/kwang2131/StudentStellarShiedv2`
+- Public Live Link Demo: `[https://github.com/kwang2131/StudentStellarShiedv2](https://studentstellarshiedv2-production.up.railway.app/)`
 - README with complete documentation: complete
 - Minimum 10+ meaningful commits: complete (`12` commits in current history)
 - Live demo link: intentionally left blank for now
