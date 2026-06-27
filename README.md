@@ -10,7 +10,7 @@ Proof-of-funds and conditional deposit rail for international students on Stella
 ## Submission Snapshot
 
 - Public GitHub repository: `https://github.com/kwang2131/StudentStellarShiedv2`
-- Public Live Link Demo: `https://studentstellarshiedv2-production.up.railway.app`
+- Public Live Link Demo: [https://studentstellarshiedv2-production.up.railway.app](https://studentstellarshiedv2-production.up.railway.app)
 - README with complete documentation: complete
 - Minimum 10+ meaningful commits: complete (`12` commits in current history)
 - Live demo link: intentionally left blank for now
@@ -56,7 +56,6 @@ StudyBond replaces that with:
 - Prisma 7 + Neon PostgreSQL
 - Soroban Rust smart contract
 - `@stellar/stellar-sdk`
-- `@creit.tech/stellar-wallets-kit`
 - Vitest + Testing Library
 - GitHub Actions CI
 - Vercel-ready deployment config
@@ -149,6 +148,17 @@ Core methods:
 - `expire_case`
 - `get_case`
 - `get_status`
+
+### Frontend integration proof
+
+- Wallet connect feature: `src/components/wallet-connect-feature.tsx`
+- Wallet session and signing: `src/components/providers/wallet-provider.tsx`
+- Connect button UI: `src/components/wallet-connect-button.tsx`
+- Soroban contract metadata and method mapping: `src/lib/stellar/contract.ts`
+- Prepared transaction builder and `@stellar/stellar-sdk` calls: `src/lib/stellar/contract-client.ts`
+- Frontend submit route for all contract actions: `src/app/api/bonds/[id]/actions/route.ts`
+- Reviewer-facing contract/frontend matrix: `src/components/contract-integration-panel.tsx`
+- Contract/frontend coverage test: `src/lib/stellar/contract.test.ts`
 
 ## Smart Contract Deployment
 

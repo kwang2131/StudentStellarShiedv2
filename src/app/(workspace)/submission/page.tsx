@@ -1,6 +1,8 @@
+import { ContractIntegrationPanel } from "@/components/contract-integration-panel";
 import { PageIntro } from "@/components/page-intro";
 import { SubmissionChecklist } from "@/components/submission-checklist";
 import { TransactionHashLink } from "@/components/transaction-hash-link";
+import { WalletConnectFeature } from "@/components/wallet-connect-feature";
 import { getSubmissionPageData } from "@/lib/server/submission";
 import { addressExplorerUrl, contractExplorerUrl } from "@/lib/stellar/explorer";
 
@@ -82,6 +84,11 @@ export default async function SubmissionPage() {
             </p>
           </div>
         </div>
+      </section>
+
+      <section className="grid gap-4 xl:grid-cols-[0.96fr_1.04fr]">
+        <WalletConnectFeature />
+        <ContractIntegrationPanel />
       </section>
 
       <SubmissionChecklist checklist={data.checklist} />
