@@ -3,7 +3,7 @@ builder = "NIXPACKS"
 nixpacksConfigPath = "nixpacks.toml"
 
 [deploy]
-startCommand = "node .next/standalone/server.js"
+startCommand = "node scripts/start-standalone.mjs"
 preDeployCommand = "npx prisma migrate deploy"
 healthcheckPath = "/api/health"
 healthcheckTimeout = 180
