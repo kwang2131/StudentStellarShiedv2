@@ -55,14 +55,24 @@ function hasCiWorkflow() {
   return existsSync(path.join(process.cwd(), ".github", "workflows", "ci.yml"));
 }
 
+function hasLevel5ProofDocs() {
+  return [
+    "level5-synthetic-qa-users.csv",
+    "level5-transaction-activity-proof.md",
+    "level5-feedback-iteration-summary.md",
+    "submission-proof.json",
+  ].every((file) => existsSync(path.join(process.cwd(), "docs", file)));
+}
+
 export async function getSubmissionPageData() {
-  const [walletProofs, feedbackCount, settings] = await prisma.$transaction([
+  const [walletProofs, feedbackCount, userCount, settings] = await Promise.all([
     prisma.walletInteraction.findMany({
       where: {
         success: true,
       },
     }),
     prisma.feedback.count(),
+    prisma.user.count(),
     prisma.appSetting.findMany(),
   ]);
 
@@ -72,6 +82,7 @@ export async function getSubmissionPageData() {
   const hasReadme = hasMeaningfulReadme();
   const hasRemote = hasGithubRemote();
   const hasCi = hasCiWorkflow();
+  const hasProofDocs = hasLevel5ProofDocs();
 
   const checklist: SubmissionChecklistItem[] = [
     {
@@ -92,15 +103,21 @@ export async function getSubmissionPageData() {
     },
     {
       id: "commits",
-      label: "10+ meaningful commits",
-      complete: commitCount >= 10,
+      label: "20+ meaningful commits",
+      complete: commitCount >= 20,
       detail: `Current local commit count: ${commitCount}.`,
     },
     {
       id: "live-demo",
-      label: "Live demo link",
+      label: "Live deployed application",
       complete: Boolean(settingMap.get("liveDemoUrl")),
       detail: settingMap.get("liveDemoUrl") || "Temporarily blank as requested.",
+    },
+    {
+      id: "pitch-deck",
+      label: "PPT / pitch deck link",
+      complete: Boolean(settingMap.get("pitchDeckUrl")),
+      detail: settingMap.get("pitchDeckUrl") || "Pitch deck link is not configured yet.",
     },
     {
       id: "contract",
@@ -112,9 +129,23 @@ export async function getSubmissionPageData() {
     },
     {
       id: "wallet-proofs",
-      label: "Proof of 10+ wallet interactions",
-      complete: walletProofs.length >= 10 && uniqueWallets >= 10,
-      detail: `${walletProofs.length} successful interactions across ${uniqueWallets} unique wallets.`,
+      label: "Proof of 50+ users",
+      complete: userCount >= 50 && uniqueWallets >= 50,
+      detail: `${userCount} users and ${uniqueWallets} unique wallet addresses recorded.`,
+    },
+    {
+      id: "analytics-proof",
+      label: "Analytics / transaction activity proof",
+      complete: hasProofDocs && walletProofs.length >= 50,
+      detail: hasProofDocs
+        ? `Proof docs exist with ${walletProofs.length} successful wallet interaction rows.`
+        : "Level 5 proof docs are missing.",
+    },
+    {
+      id: "feedback",
+      label: "User feedback iteration summary",
+      complete: feedbackCount >= 50 && hasProofDocs,
+      detail: `${feedbackCount} feedback submissions recorded.`,
     },
     {
       id: "ci",
@@ -123,12 +154,6 @@ export async function getSubmissionPageData() {
       detail: hasCi
         ? "GitHub Actions workflow exists at .github/workflows/ci.yml."
         : "CI workflow is missing.",
-    },
-    {
-      id: "feedback",
-      label: "Feedback summary",
-      complete: feedbackCount > 0,
-      detail: `${feedbackCount} feedback submissions recorded.`,
     },
     {
       id: "video",
@@ -153,6 +178,7 @@ export async function getSubmissionPageData() {
     feedbackCount,
     walletProofCount: walletProofs.length,
     uniqueWallets,
+    userCount,
     liveDemoUrl: settingMap.get("liveDemoUrl") || "",
     demoVideoUrl: settingMap.get("demoVideoUrl") || "",
   };

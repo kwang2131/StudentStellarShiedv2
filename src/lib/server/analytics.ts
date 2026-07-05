@@ -17,7 +17,7 @@ export async function trackEvent(payload: AnalyticsPayloadInput) {
 }
 
 export async function getAnalyticsPageData() {
-  const [events, walletInteractions, feedback] = await prisma.$transaction([
+  const [events, walletInteractions, feedback] = await Promise.all([
     prisma.analyticsEvent.findMany({
       orderBy: {
         createdAt: "desc",

@@ -14,15 +14,15 @@ export default async function SubmissionPage() {
   return (
     <div className="space-y-6">
       <PageIntro
-        description="Current Level 4 readiness view across repo hygiene, contract deployment, wallet proof volume, feedback, and public deliverables."
+        description="Current Level 5 readiness view across repo hygiene, deployed app, contract deployment, 50-user proof, analytics activity, feedback iteration, and public deliverables."
         eyebrow="Submission"
-        title="Startup Track Level 4 checklist"
+        title="Startup Track Level 5 checklist"
       />
 
       <section className="grid gap-4 md:grid-cols-4">
         <Stat label="Commit count" value={String(data.commitCount)} />
+        <Stat label="User proof" value={String(data.userCount)} />
         <Stat label="Feedback count" value={String(data.feedbackCount)} />
-        <Stat label="Proof rows" value={String(data.walletProofCount)} />
         <Stat label="Unique wallets" value={String(data.uniqueWallets)} />
       </section>
 
@@ -72,15 +72,14 @@ export default async function SubmissionPage() {
           <p className="text-xs uppercase tracking-[0.18em] text-muted">Reviewer notes</p>
           <div className="mt-4 space-y-4 text-sm leading-7 text-muted">
             <p>
-              Wallet proof generation is now backed by real Stellar testnet transactions, stored in
-              Prisma, and surfaced on <span className="font-medium text-foreground">/wallet-proofs</span>.
+              Level 5 proof is stored in Prisma and mirrored to docs: 50 synthetic QA users, wallet proof rows,
+              feedback records, analytics events, and representative Stellar testnet transaction hashes.
             </p>
             <p>
-              Live demo link and demo video are intentionally left blank for now per the current request.
+              Live app proof is configured. Demo video remains pending until an actual screen recording is attached.
             </p>
             <p>
-              Feedback collection is implemented and live in <span className="font-medium text-foreground">/feedback</span>,
-              but no real user responses have been recorded yet in this workspace state.
+              Synthetic QA proof is clearly labeled and should not be submitted as real external user acquisition.
             </p>
           </div>
         </div>

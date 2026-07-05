@@ -10,7 +10,7 @@ const ACTIVE_STATUSES = [
 ] as const;
 
 export async function getDashboardData() {
-  const [cases, walletInteractions, feedback, auditLogs] = await prisma.$transaction([
+  const [cases, walletInteractions, feedback, auditLogs] = await Promise.all([
     prisma.studyBondCase.findMany({
       orderBy: {
         createdAt: "desc",

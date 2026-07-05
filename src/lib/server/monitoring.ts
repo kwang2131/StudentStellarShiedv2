@@ -27,7 +27,7 @@ export async function captureError(input: CaptureErrorInput) {
 }
 
 export async function getMonitoringOverview() {
-  const [errors, totalErrors] = await prisma.$transaction([
+  const [errors, totalErrors] = await Promise.all([
     prisma.errorLog.findMany({
       orderBy: {
         createdAt: "desc",
