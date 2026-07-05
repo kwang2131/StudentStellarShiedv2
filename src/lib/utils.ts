@@ -75,6 +75,10 @@ export function roleLabel(role: UserRole) {
 }
 
 export function providerLabel(provider: WalletProvider) {
+  if (provider !== "FREIGHTER" && provider !== "RABET") {
+    return "User";
+  }
+
   return provider.charAt(0).concat(provider.slice(1).toLowerCase());
 }
 

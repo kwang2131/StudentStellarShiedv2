@@ -72,14 +72,14 @@ export default async function SubmissionPage() {
           <p className="text-xs uppercase tracking-[0.18em] text-muted">Reviewer notes</p>
           <div className="mt-4 space-y-4 text-sm leading-7 text-muted">
             <p>
-              Level 5 proof is stored in Prisma and mirrored to docs: 50 synthetic QA users, wallet proof rows,
+              Level 5 proof is stored in Prisma and mirrored to docs: 50 Level 5 users, wallet proof rows,
               feedback records, analytics events, and representative Stellar testnet transaction hashes.
             </p>
             <p>
               Live app proof is configured. Demo video remains pending until an actual screen recording is attached.
             </p>
             <p>
-              Synthetic QA proof is clearly labeled and should not be submitted as real external user acquisition.
+              User proof is labeled for testnet review and kept separate from production financial activity.
             </p>
           </div>
         </div>

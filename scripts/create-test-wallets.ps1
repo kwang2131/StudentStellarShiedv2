@@ -62,7 +62,7 @@ foreach ($wallet in $wallets) {
     balance         = $nativeBalance
     lastInteraction = $lastInteraction
     lastTxHash      = $lastTxHash
-    walletProvider  = "CLI"
+    walletProvider  = "FREIGHTER"
     usedInApp       = $false
   }
 

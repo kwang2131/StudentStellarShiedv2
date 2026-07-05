@@ -17,7 +17,7 @@ export interface WalletFixture {
   balance?: string;
   lastInteraction?: string;
   lastTxHash?: string;
-  walletProvider?: "CLI";
+  walletProvider?: "FREIGHTER" | "RABET";
   usedInApp?: boolean;
 }
 

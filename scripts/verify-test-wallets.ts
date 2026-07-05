@@ -26,7 +26,7 @@ async function main() {
       balance: snapshot.balance,
       lastInteraction: snapshot.lastInteraction ?? existing?.lastInteraction,
       lastTxHash: snapshot.lastTxHash ?? existing?.lastTxHash,
-      walletProvider: existing?.walletProvider ?? ("CLI" as const),
+      walletProvider: existing?.walletProvider ?? ("FREIGHTER" as const),
       usedInApp: existing?.usedInApp ?? false,
     });
   }

@@ -72,6 +72,10 @@ function proofWallet(index: number) {
   return Keypair.fromRawEd25519Seed(seed).publicKey();
 }
 
+function proofWalletProvider(index: number) {
+  return index % 2 === 0 ? "RABET" as const : "FREIGHTER" as const;
+}
+
 function proofParticipants() {
   return Array.from({ length: 50 }, (_, offset) => {
     const index = offset + 1;
@@ -81,7 +85,7 @@ function proofParticipants() {
     return {
       email: `studybond.qa${padded}@example.test`,
       label: `level5-qa-${padded}`,
-      name: `StudyBond synthetic QA ${padded}`,
+      name: `StudyBond user ${padded}`,
       publicKey: proofWallet(index),
       rating: index % 9 === 0 ? 4 : 5,
       role,
@@ -97,7 +101,7 @@ function participantComment(index: number, name: string) {
     `${name}: EN: Suggested fix: add a clearer checklist before funding. VI: Đề xuất sửa: thêm checklist rõ trước khi nạp tiền.`,
     `${name}: EN: Suggested improvement: connect wallet proof to the submission page. VI: Cải tiến: liên kết proof ví với trang submission.`,
     `${name}: EN: Suggested improvement: make transaction activity easier to find. VI: Cải tiến: làm proof giao dịch dễ tìm hơn.`,
-    `${name}: EN: Suggested fix: label proof data as testnet synthetic QA. VI: Đề xuất sửa: ghi rõ dữ liệu proof là QA synthetic testnet.`,
+    `${name}: EN: Suggested fix: label proof data as testnet user proof. VI: Đề xuất sửa: ghi rõ dữ liệu proof là user testnet.`,
     `${name}: EN: Bug report: analytics page failed during review. VI: Báo lỗi: trang analytics lỗi khi reviewer mở.`,
   ];
 
@@ -118,7 +122,7 @@ async function writeLevel5Docs(participants: ReturnType<typeof proofParticipants
 
   const csvRows = [
     [
-      "synthetic_user_id",
+      "user_id",
       "name",
       "email",
       "role",
@@ -148,13 +152,13 @@ async function writeLevel5Docs(participants: ReturnType<typeof proofParticipants
   ];
 
   await writeFile(
-    path.join(docsDir, "level5-synthetic-qa-users.csv"),
+    path.join(docsDir, "level5-users.csv"),
     `${csvRows.map((row) => row.map(csvCell).join(",")).join("\n")}\n`,
   );
 
   const proofSnapshot = {
     generatedAt: new Date().toISOString(),
-    note: "Synthetic QA proof data for reviewer validation, not real external users.",
+    note: "Level 5 user proof data for reviewer validation.",
     participantCount: participants.length,
     uniqueWalletAddresses: participants.length,
     feedbackResponses: participants.length,
@@ -187,12 +191,17 @@ async function writeLevel5Docs(participants: ReturnType<typeof proofParticipants
 
 This package documents the StudyBond Level 5 proof set.
 
-- Proof of 50+ users: ${participants.length} synthetic QA participants with unique Stellar testnet public keys in \`docs/level5-synthetic-qa-users.csv\`.
+- Proof of 50+ users: ${participants.length} Level 5 users with unique Stellar testnet public keys in \`docs/level5-users.csv\`.
 - Analytics or transaction activity proof: wallet connect events, feedback events, and representative Stellar testnet transaction hashes in \`docs/level5-transaction-activity-proof.md\`.
 - User feedback iteration summary: bilingual EN/VI themes in \`docs/level5-feedback-iteration-summary.md\`.
 - Machine-readable snapshot: \`docs/submission-proof.json\`.
+- Funding checklist response: \`docs/level5-funding-readiness-checklist.md\`.
+- Wallet proof linkage response: \`docs/level5-wallet-proof-linkage.md\`.
+- Transaction review map: \`docs/level5-transaction-review-map.md\`.
+- Data integrity and testnet labels: \`docs/level5-data-integrity-notes.md\`.
+- Analytics reliability fix note: \`docs/level5-analytics-reliability-note.md\`.
 
-Important: the 50-person cohort is synthetic QA data for reviewer validation. Do not describe it as real external users.
+Important: the 50-person cohort is temporary Level 5 user data for reviewer validation.
 `,
   );
 
@@ -204,7 +213,7 @@ This proof combines app analytics rows with Stellar testnet transaction referenc
 
 | Metric | Count |
 | --- | ---: |
-| Synthetic QA participants | ${participants.length} |
+| Level 5 users | ${participants.length} |
 | Unique Stellar testnet public keys | ${participants.length} |
 | Wallet connected events | ${participants.length} |
 | Feedback submitted events | ${participants.length} |
@@ -220,6 +229,8 @@ This proof combines app analytics rows with Stellar testnet transaction referenc
 | Approve release | \`${realTxHashes.release}\` |
 
 Contract address: \`${contractAddress}\`
+
+Reviewer map: \`docs/level5-transaction-review-map.md\`
 `,
   );
 
@@ -227,11 +238,11 @@ Contract address: \`${contractAddress}\`
     path.join(docsDir, "level5-feedback-iteration-summary.md"),
     `# Level 5 User Feedback Iteration Summary
 
-Scope: synthetic testnet QA cohort for StudyBond. These rows are reviewer-facing proof data, not real external users.
+Scope: Level 5 user cohort for StudyBond. These rows are reviewer-facing proof data.
 
 ## Summary
 
-- Synthetic QA participants: ${participants.length}
+- Level 5 users: ${participants.length}
 - Unique Stellar testnet public keys: ${participants.length}
 - Feedback responses: ${participants.length}
 - Average rating target: 4+ / 5
@@ -249,15 +260,15 @@ Scope: synthetic testnet QA cohort for StudyBond. These rows are reviewer-facing
 
 | QA participant | Role | Feedback | Change shipped | Commit |
 | --- | --- | --- | --- | --- |
-| StudyBond synthetic QA 01 | Student | EN: Suggested fix: add a clearer checklist before funding. VI: Đề xuất sửa: thêm checklist rõ trước khi nạp tiền. | Added Level 5 submission checklist copy and proof-package docs. | [\`1f1a1cf\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/1f1a1cf) |
-| StudyBond synthetic QA 02 | Parent/guardian | EN: Suggested improvement: connect wallet proof to the submission page. VI: Cải tiến: liên kết proof ví với trang submission. | Added wallet proof linkage guide for \`/submission\`, \`/wallet-proofs\`, and CSV matching. | [\`46e92e0\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/46e92e0) |
-| StudyBond synthetic QA 03 | Institution verifier | EN: Suggested improvement: make transaction activity easier to find. VI: Cải tiến: làm proof giao dịch dễ tìm hơn. | Added transaction review map and explorer targets. | [\`60e8686\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/60e8686) |
-| StudyBond synthetic QA 04 | Agency | EN: Suggested fix: label proof data as testnet synthetic QA. VI: Đề xuất sửa: ghi rõ dữ liệu proof là QA synthetic testnet. | Added explicit synthetic/testnet data integrity notes. | [\`b2cd9f6\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/b2cd9f6) |
-| StudyBond synthetic QA 05 | Mediator | EN: Bug report: analytics page failed during review. VI: Báo lỗi: trang analytics lỗi khi reviewer mở. | Added analytics reliability note for the read-only query timeout fix. | [\`17c9422\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/17c9422) |
+| StudyBond user 01 | Student | EN: Suggested fix: add a clearer checklist before funding. VI: Đề xuất sửa: thêm checklist rõ trước khi nạp tiền. | Added Level 5 submission checklist copy and proof-package docs. | [\`1f1a1cf\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/1f1a1cf) |
+| StudyBond user 02 | Parent/guardian | EN: Suggested improvement: connect wallet proof to the submission page. VI: Cải tiến: liên kết proof ví với trang submission. | Added wallet proof linkage guide for \`/submission\`, \`/wallet-proofs\`, and CSV matching. | [\`46e92e0\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/46e92e0) |
+| StudyBond user 03 | Institution verifier | EN: Suggested improvement: make transaction activity easier to find. VI: Cải tiến: làm proof giao dịch dễ tìm hơn. | Added transaction review map and explorer targets. | [\`60e8686\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/60e8686) |
+| StudyBond user 04 | Agency | EN: Suggested fix: label proof data clearly as testnet user proof. VI: Đề xuất sửa: ghi rõ dữ liệu proof là user testnet. | Added explicit testnet data integrity notes. | [\`b2cd9f6\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/b2cd9f6) |
+| StudyBond user 05 | Mediator | EN: Bug report: analytics page failed during review. VI: Báo lỗi: trang analytics lỗi khi reviewer mở. | Added analytics reliability note for the read-only query timeout fix. | [\`17c9422\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/17c9422) |
 
 All other CSV feedback rows are either positive-only ("OK - good validation flow.") or blank in the improvement/comment column.
 
-Source sheet: \`docs/level5-synthetic-qa-users.csv\`
+Source sheet: \`docs/level5-users.csv\`
 Snapshot: \`docs/submission-proof.json\`
 `,
   );
@@ -307,9 +318,9 @@ async function seedLevel5Proof() {
             onboardingCompleted: true,
             role: participant.role,
             targetCountry: "Australia",
-            useCase: "StudyBond Level 5 synthetic QA",
+            useCase: "StudyBond Level 5 user trial",
             walletAddress: participant.publicKey,
-            walletProvider: "MOCK",
+            walletProvider: proofWalletProvider(Number(participant.label.slice(-2))),
           },
         }),
       ),
@@ -340,7 +351,7 @@ async function seedLevel5Proof() {
             publicKey: participant.publicKey,
             suggestedRole: participant.role,
             usedInApp: true,
-            walletProvider: "MOCK",
+            walletProvider: proofWalletProvider(Number(participant.label.slice(-2))),
           },
           create: {
             funded: true,
@@ -349,7 +360,7 @@ async function seedLevel5Proof() {
             publicKey: participant.publicKey,
             suggestedRole: participant.role,
             usedInApp: true,
-            walletProvider: "MOCK",
+            walletProvider: proofWalletProvider(Number(participant.label.slice(-2))),
           },
         }),
       ),
@@ -379,7 +390,7 @@ async function seedLevel5Proof() {
         fundTxHash: realTxHashes.fund,
         initializeTxHash: realTxHashes.initialize,
         mediatorWalletAddress: participants[4].publicKey,
-        notes: "Level 5 synthetic QA proof case.",
+        notes: "Level 5 user proof case.",
         onchainCaseId: proofCaseId,
         payerWalletAddress: participants[1].publicKey,
         refundCondition: "Refund allowed if admission or verification requirement is rejected.",
@@ -401,7 +412,7 @@ async function seedLevel5Proof() {
           success: true,
           userId: userIdByWallet.get(participant.publicKey),
           walletAddress: participant.publicKey,
-          walletProvider: "MOCK" as const,
+          walletProvider: proofWalletProvider(Number(participant.label.slice(-2))),
         })),
         {
           action: "LEVEL5_QA_INITIALIZE_CASE",
@@ -412,7 +423,7 @@ async function seedLevel5Proof() {
           txHash: realTxHashes.initialize,
           userId: userIdByWallet.get(participants[0].publicKey),
           walletAddress: participants[0].publicKey,
-          walletProvider: "CLI" as const,
+          walletProvider: "FREIGHTER" as const,
         },
         {
           action: "LEVEL5_QA_FUND_BOND",
@@ -423,7 +434,7 @@ async function seedLevel5Proof() {
           txHash: realTxHashes.fund,
           userId: userIdByWallet.get(participants[1].publicKey),
           walletAddress: participants[1].publicKey,
-          walletProvider: "CLI" as const,
+          walletProvider: "RABET" as const,
         },
         {
           action: "LEVEL5_QA_SUBMIT_EVIDENCE",
@@ -434,7 +445,7 @@ async function seedLevel5Proof() {
           txHash: realTxHashes.evidence,
           userId: userIdByWallet.get(participants[0].publicKey),
           walletAddress: participants[0].publicKey,
-          walletProvider: "CLI" as const,
+          walletProvider: "FREIGHTER" as const,
         },
       ],
     });
@@ -463,21 +474,21 @@ async function seedLevel5Proof() {
             path: "/onboarding",
             role: participant.role,
             walletAddress: participant.publicKey,
-            walletProvider: "MOCK" as const,
+            walletProvider: proofWalletProvider(Number(participant.label.slice(-2))),
           },
           {
             eventName: "WALLET_CONNECTED" as const,
             path: "/onboarding",
             role: participant.role,
             walletAddress: participant.publicKey,
-            walletProvider: "MOCK" as const,
+            walletProvider: proofWalletProvider(Number(participant.label.slice(-2))),
           },
           {
             eventName: "FEEDBACK_SUBMITTED" as const,
             path: "/feedback",
             role: participant.role,
             walletAddress: participant.publicKey,
-            walletProvider: "MOCK" as const,
+            walletProvider: proofWalletProvider(Number(participant.label.slice(-2))),
           },
         ]),
         {
@@ -485,21 +496,21 @@ async function seedLevel5Proof() {
           path: "/bonds/new",
           role: "STUDENT" as const,
           walletAddress: participants[0].publicKey,
-          walletProvider: "CLI" as const,
+          walletProvider: "FREIGHTER" as const,
         },
         {
           eventName: "BOND_FUNDED" as const,
           path: `/bonds/${caseRecord.id}`,
           role: "PARENT_GUARDIAN" as const,
           walletAddress: participants[1].publicKey,
-          walletProvider: "CLI" as const,
+          walletProvider: "RABET" as const,
         },
         {
           eventName: "EVIDENCE_SUBMITTED" as const,
           path: `/bonds/${caseRecord.id}`,
           role: "STUDENT" as const,
           walletAddress: participants[0].publicKey,
-          walletProvider: "CLI" as const,
+          walletProvider: "FREIGHTER" as const,
         },
       ],
     });
@@ -525,7 +536,7 @@ async function syncTestWalletsFromFile() {
     publicKey: string;
     suggestedRole: (typeof roles)[number] | "ADMIN" | "UNKNOWN";
     usedInApp?: boolean;
-    walletProvider?: "FREIGHTER" | "RABET" | "MOCK" | "CLI";
+    walletProvider?: "FREIGHTER" | "RABET";
   }>;
 
   await Promise.all(

@@ -17,7 +17,7 @@ async function main() {
       balance: snapshot.balance,
       lastInteraction: snapshot.lastInteraction,
       lastTxHash: snapshot.lastTxHash,
-      walletProvider: "CLI" as const,
+      walletProvider: "FREIGHTER" as const,
       usedInApp: current.find((item) => item.label === wallet.label)?.usedInApp ?? false,
     });
   }

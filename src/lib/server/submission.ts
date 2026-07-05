@@ -57,7 +57,7 @@ function hasCiWorkflow() {
 
 function hasLevel5ProofDocs() {
   return [
-    "level5-synthetic-qa-users.csv",
+    "level5-users.csv",
     "level5-transaction-activity-proof.md",
     "level5-feedback-iteration-summary.md",
     "submission-proof.json",

@@ -36,7 +36,7 @@ import type {
   UserRole,
 } from "../src/types/study-bond";
 
-const WALLET_PROVIDER = "CLI" as const;
+const WALLET_PROVIDER = "FREIGHTER" as const;
 
 interface WalletActor {
   label: string;

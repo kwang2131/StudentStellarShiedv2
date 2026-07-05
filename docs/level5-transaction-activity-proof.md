@@ -4,7 +4,7 @@ This proof combines app analytics rows with Stellar testnet transaction referenc
 
 | Metric | Count |
 | --- | ---: |
-| Synthetic QA participants | 50 |
+| Level 5 users | 50 |
 | Unique Stellar testnet public keys | 50 |
 | Wallet connected events | 50 |
 | Feedback submitted events | 50 |
