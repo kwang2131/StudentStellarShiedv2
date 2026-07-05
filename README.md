@@ -213,6 +213,7 @@ Proof files:
 - `docs/level5-synthetic-qa-users.csv`
 - `docs/level5-feedback-iteration-summary.md`
 - `docs/level5-transaction-activity-proof.md`
+- `docs/level5-data-integrity-notes.md`
 - `docs/submission-proof.json`
 
 ## CI/CD
