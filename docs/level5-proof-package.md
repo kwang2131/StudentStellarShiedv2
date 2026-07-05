@@ -7,5 +7,6 @@ This package documents the StudyBond Level 5 proof set.
 - User feedback iteration summary: bilingual EN/VI themes in `docs/level5-feedback-iteration-summary.md`.
 - Machine-readable snapshot: `docs/submission-proof.json`.
 - Funding checklist response: `docs/level5-funding-readiness-checklist.md`.
+- Wallet proof linkage response: `docs/level5-wallet-proof-linkage.md`.
 
 Important: the 50-person cohort is synthetic QA data for reviewer validation. Do not describe it as real external users.
