@@ -6,5 +6,6 @@ This package documents the StudyBond Level 5 proof set.
 - Analytics or transaction activity proof: wallet connect events, feedback events, and representative Stellar testnet transaction hashes in `docs/level5-transaction-activity-proof.md`.
 - User feedback iteration summary: bilingual EN/VI themes in `docs/level5-feedback-iteration-summary.md`.
 - Machine-readable snapshot: `docs/submission-proof.json`.
+- Funding checklist response: `docs/level5-funding-readiness-checklist.md`.
 
 Important: the 50-person cohort is synthetic QA data for reviewer validation. Do not describe it as real external users.
