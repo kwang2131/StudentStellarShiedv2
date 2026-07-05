@@ -92,6 +92,22 @@ function proofParticipants() {
   });
 }
 
+function participantComment(index: number, name: string) {
+  const comments = [
+    `${name}: EN: Suggested fix: add a clearer checklist before funding. VI: Đề xuất sửa: thêm checklist rõ trước khi nạp tiền.`,
+    `${name}: EN: Suggested improvement: connect wallet proof to the submission page. VI: Cải tiến: liên kết proof ví với trang submission.`,
+    `${name}: EN: Suggested improvement: make transaction activity easier to find. VI: Cải tiến: làm proof giao dịch dễ tìm hơn.`,
+    `${name}: EN: Suggested fix: label proof data as testnet synthetic QA. VI: Đề xuất sửa: ghi rõ dữ liệu proof là QA synthetic testnet.`,
+    `${name}: EN: Bug report: analytics page failed during review. VI: Báo lỗi: trang analytics lỗi khi reviewer mở.`,
+  ];
+
+  if (index <= comments.length) {
+    return comments[index - 1];
+  }
+
+  return index % 2 === 0 ? "OK - good validation flow." : "";
+}
+
 function csvCell(value: string | number | boolean) {
   return `"${String(value).replace(/"/g, '""')}"`;
 }
@@ -127,7 +143,7 @@ async function writeLevel5Docs(participants: ReturnType<typeof proofParticipants
       participant.wouldUse,
       participant.workedWell,
       participant.confusing,
-      `${participant.name}: EN: suggested improving checklist copy. VI: đề xuất làm checklist rõ hơn.`,
+      participantComment(Number(participant.label.slice(-2)), participant.name),
     ]),
   ];
 
@@ -413,7 +429,9 @@ async function seedLevel5Proof() {
 
     await tx.feedback.createMany({
       data: participants.map((participant) => ({
-        comment: `${participant.name}: EN: suggested improving checklist copy. VI: đề xuất làm checklist rõ hơn.`,
+        comment:
+          participantComment(Number(participant.label.slice(-2)), participant.name) ||
+          null,
         contact: participant.email,
         confusing: participant.confusing,
         rating: participant.rating,
