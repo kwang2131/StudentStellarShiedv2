@@ -10,5 +10,6 @@ This package documents the StudyBond Level 5 proof set.
 - Wallet proof linkage response: `docs/level5-wallet-proof-linkage.md`.
 - Transaction review map: `docs/level5-transaction-review-map.md`.
 - Data integrity and testnet labels: `docs/level5-data-integrity-notes.md`.
+- Analytics reliability fix note: `docs/level5-analytics-reliability-note.md`.
 
 Important: the 50-person cohort is synthetic QA data for reviewer validation. Do not describe it as real external users.
