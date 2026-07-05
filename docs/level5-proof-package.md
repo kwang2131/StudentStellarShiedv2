@@ -8,5 +8,6 @@ This package documents the StudyBond Level 5 proof set.
 - Machine-readable snapshot: `docs/submission-proof.json`.
 - Funding checklist response: `docs/level5-funding-readiness-checklist.md`.
 - Wallet proof linkage response: `docs/level5-wallet-proof-linkage.md`.
+- Transaction review map: `docs/level5-transaction-review-map.md`.
 
 Important: the 50-person cohort is synthetic QA data for reviewer validation. Do not describe it as real external users.

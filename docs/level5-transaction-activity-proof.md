@@ -20,3 +20,5 @@ This proof combines app analytics rows with Stellar testnet transaction referenc
 | Approve release | `9eda966b6791ced2acc71a7fe88352b1c98eb15fab705f0c19e9719e563d7044` |
 
 Contract address: `CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N`
+
+Reviewer map: `docs/level5-transaction-review-map.md`
