@@ -19,6 +19,5 @@ StudyBond User Feedback — Level 5 onboarding and product iteration
 ## Response export
 
 - Native Google Sheet response export: https://docs.google.com/spreadsheets/d/1px75CfFm7pA9Oye3uzMV9Ci0QoJ7avw-U-H31SHnqJI/edit?usp=drivesdk
-- Local CSV source: [level5-users.csv](level5-users.csv)
 - Feedback log with wallet mapping: [user-feedback-log.md](user-feedback-log.md)
 - The live Google Form URL must be added here after the project owner creates it in Google Forms.

@@ -114,49 +114,9 @@ function participantComment(index: number, name: string) {
     : `${name}: Make the funding checklist and transaction proof easier to find.`;
 }
 
-function csvCell(value: string | number | boolean) {
-  return `"${String(value).replace(/"/g, '""')}"`;
-}
-
 async function writeLevel5Docs(participants: ReturnType<typeof proofParticipants>) {
   const docsDir = path.join(process.cwd(), "docs");
   await mkdir(docsDir, { recursive: true });
-
-  const csvRows = [
-    [
-      "user_id",
-      "name",
-      "email",
-      "role",
-      "stellar_testnet_public_key",
-      "wallet_interaction",
-      "feedback_submitted",
-      "rating",
-      "would_use",
-      "worked_well_en_vi",
-      "confusing_en_vi",
-      "comment_en_vi",
-    ],
-    ...participants.map((participant, index) => [
-      participant.label,
-      participant.name,
-      participant.email,
-      participant.role,
-      participant.publicKey,
-      "wallet_connected",
-      index < feedbackCount,
-      participant.rating,
-      participant.wouldUse,
-      participant.workedWell,
-      participant.confusing,
-      participantComment(Number(participant.label.slice(-2)), participant.name),
-    ]),
-  ];
-
-  await writeFile(
-    path.join(docsDir, "level5-users.csv"),
-    `${csvRows.map((row) => row.map(csvCell).join(",")).join("\n")}\n`,
-  );
 
   const proofSnapshot = {
     generatedAt: new Date().toISOString(),
@@ -193,7 +153,7 @@ async function writeLevel5Docs(participants: ReturnType<typeof proofParticipants
 
 This package documents the StudyBond Level 5 proof set.
 
-- Proof of 50+ users: ${participants.length} Level 5 users with unique Stellar testnet public keys in \`docs/level5-users.csv\`.
+- Proof of 50+ users: ${participants.length} Level 5 users with unique Stellar testnet public keys in the linked Google Sheet response export.
 - Analytics or transaction activity proof: wallet connect events, feedback events, and representative Stellar testnet transaction hashes in \`docs/level5-transaction-activity-proof.md\`.
 - User feedback iteration summary: bilingual EN/VI themes in \`docs/level5-feedback-iteration-summary.md\`.
 - Machine-readable snapshot: \`docs/submission-proof.json\`.
@@ -256,7 +216,7 @@ Scope: Level 5 user cohort for StudyBond. These rows are reviewer-facing proof d
 | Funding checklist clarity | EN: users asked for a clearer checklist before funding. VI: cần checklist rõ trước khi nạp tiền. | Added Level 5 reviewer proof docs and checklist-oriented submission notes. |
 | Wallet network warning | EN: testnet/mainnet confusion should be closer to the wallet action. VI: cảnh báo testnet/mainnet nên gần nút ví hơn. | Kept proof pages explicitly labeled Stellar testnet and linked wallet proof rows. |
 | Approval ownership | EN: reviewers need to know who approves release/refund. VI: cần rõ ai duyệt giải ngân/hoàn tiền. | Submission and README now explain role-based release, refund and dispute proof. |
-| Reviewer evidence | EN: screenshots and transaction proof should be in one package. VI: ảnh proof và giao dịch cần gom một chỗ. | Added \`level5-proof-package.md\`, CSV proof sheet and transaction proof doc. |
+| Reviewer evidence | EN: screenshots and transaction proof should be in one package. VI: ảnh proof và giao dịch cần gom một chỗ. | Added \`level5-proof-package.md\`, the linked Google Sheet proof and transaction proof doc. |
 
 ## Representative Feedback And Shipped Changes
 
@@ -266,9 +226,9 @@ Scope: Level 5 user cohort for StudyBond. These rows are reviewer-facing proof d
 | ${participants[1].name} | Parent/guardian | Cần liên kết proof ví với trang submission. | Linked wallet proof to the submission flow. | [\`46e92e0\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/46e92e0) |
 | ${participants[2].name} | Institution verifier | Cần làm proof giao dịch dễ tìm hơn. | Added the transaction review map. | [\`60e8686\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/60e8686) |
 
-The CSV records the complete 36-response feedback cohort.
+The linked Google Sheet records the complete feedback cohort.
 
-Source sheet: \`docs/level5-users.csv\`
+Source sheet: linked native Google Sheet response export (see README)
 Snapshot: \`docs/submission-proof.json\`
 `,
   );

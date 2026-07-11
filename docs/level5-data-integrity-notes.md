@@ -18,4 +18,4 @@ This note addresses QA feedback that testnet user proof labels must be explicit.
 
 ## Review Guidance
 
-Use the CSV, screenshots, and transaction docs to verify that the product can collect, display, and summarize Level 5-style proof.
+Use the linked Google Sheet, screenshots, and transaction docs to verify that the product can collect, display, and summarize Level 5-style proof.
