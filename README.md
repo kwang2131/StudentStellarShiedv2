@@ -1,5 +1,7 @@
 # StudyBond
 
+User feedback: [32-user feedback log](docs/user-feedback-log.md) · [improvement summary](docs/level5-feedback-iteration-summary.md) · [HTML pitch deck](public/submission/pitch-deck.html).
+
 [![CI](https://github.com/kwang2131/StudentStellarShiedv2/actions/workflows/ci.yml/badge.svg)](https://github.com/kwang2131/StudentStellarShiedv2/actions/workflows/ci.yml)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![Stellar](https://img.shields.io/badge/Stellar-Testnet-1d8cff)
