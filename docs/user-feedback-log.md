@@ -36,6 +36,10 @@
 | 30 | Vũ Hoài Nam | hoainam.work@gmail.com | Student | Tôi muốn xem checklist trước khi xác nhận nạp tiền. |
 | 31 | Isabella Rossi | isabellarossi90@gmail.com | Institution verifier | The role separation is clear during dispute review. |
 | 32 | Marcus Lee | marcuslee.dev@gmail.com | Parent/guardian | The submission proof should surface the feedback count prominently. |
+| 33 | Trịnh Nhật Minh | nhatminh612@gmail.com | Student | Cần làm rõ trạng thái hồ sơ đang chờ bên nào xác nhận. |
+| 34 | Nguyễn Bích Trâm | bichtramwork@gmail.com | Parent/guardian | Tôi muốn đường dẫn giao dịch nằm ngay cạnh hồ sơ bảo chứng. |
+| 35 | Hannah Clark | hannahclark85@gmail.com | Student | Put the wallet network warning closer to the connect action. |
+| 36 | Ryan Cooper | ryan.cooper@gmail.com | Institution verifier | The evidence summary should show the next responsible role. |
 
 ## Improvement tracking
 

@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "test": "vitest run && npm run test:contract",
     "feedback:audit": "node scripts/audit-user-feedback.mjs",
+    "feedback:sync": "node scripts/sync-feedback-artifacts.mjs",
     "test:watch": "vitest",
     "test:contract": "cargo test --manifest-path contracts/study_bond_escrow/Cargo.toml",
     "contract:build": "stellar contract build --manifest-path contracts/study_bond_escrow/Cargo.toml --out-dir contracts/study_bond_escrow/dist --optimize",

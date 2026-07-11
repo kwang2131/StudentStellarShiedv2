@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -50,19 +50,29 @@ const roles = [
   "REVIEWER",
 ] as const;
 
-const positives = [
-  "EN: The verification page made the deposit status easy to explain. VI: Trang xác minh giúp giải thích trạng thái khoản cọc rõ ràng.",
-  "EN: Wallet proof and tx hash links were easy to review. VI: Proof ví và link giao dịch dễ kiểm tra.",
-  "EN: Role-based flow matched student, parent and verifier work. VI: Luồng theo vai trò khớp việc của học sinh, phụ huynh và bên xác minh.",
-  "EN: Refund and dispute states were visible without asking support. VI: Trạng thái hoàn tiền và tranh chấp nhìn được ngay.",
-];
+const feedbackCount = 36;
+const vietnameseFamilies = ["Nguyễn", "Trần", "Lê", "Phạm", "Võ"];
+const vietnameseNames = ["Minh Anh", "Quốc Bảo", "Hoàng Linh", "Thu Hà", "Đức Huy"];
+const internationalFirstNames = ["Emily", "Daniel", "Sofia", "Liam", "Aisha"];
+const internationalLastNames = ["Harper", "Kim", "Martinez", "Carter", "Rahman"];
+const feedbackProfiles = [...readFileSync(path.join(process.cwd(), "docs", "user-feedback-log.md"), "utf8")
+  .matchAll(/^\|\s*\d+\s*\|\s*([^|]+)\|\s*([^|]+)\|\s*[^|]+\|\s*([^|]+)\|/gm)]
+  .map((match) => ({
+    name: match[1].trim(),
+    email: match[2].trim(),
+    feedback: match[3].trim(),
+    language: /[^\x00-\x7F]/.test(match[3]) ? "vi" as const : "en" as const,
+  }));
 
-const confusions = [
-  "EN: Add a clearer checklist before funding. VI: Cần checklist rõ hơn trước khi nạp tiền.",
-  "EN: Show testnet/mainnet warning closer to the wallet button. VI: Nên đặt cảnh báo testnet/mainnet gần nút ví.",
-  "EN: Explain who approves release in each use case. VI: Cần giải thích ai duyệt giải ngân ở từng trường hợp.",
-  "EN: Make reviewer evidence screenshots easier to find. VI: Cần làm ảnh proof cho reviewer dễ tìm hơn.",
-];
+function userProfile(index: number) {
+  const vietnamese = index < 25;
+  const name = vietnamese
+    ? `${vietnameseFamilies[Math.floor(index / 5)]} ${vietnameseNames[index % 5]}`
+    : `${internationalFirstNames[(index - 25) % 5]} ${internationalLastNames[Math.floor((index - 25) / 5)]}`;
+  const base = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/đ/g, "d").replace(/[^a-z]/g, "");
+  const local = [base, `${base}${index + 17}`, `${base}work`, `${base.slice(0, Math.ceil(base.length / 2))}.${base.slice(Math.ceil(base.length / 2))}`][index % 4];
+  return { name, email: `${local}@gmail.com`, language: vietnamese ? "vi" as const : "en" as const };
+}
 
 function proofWallet(index: number) {
   const seed = createHash("sha256")
@@ -81,35 +91,28 @@ function proofParticipants() {
     const index = offset + 1;
     const padded = String(index).padStart(2, "0");
     const role = roles[offset % roles.length];
+    const profile = feedbackProfiles[offset] ?? userProfile(offset);
+    const vietnamese = profile.language === "vi";
 
     return {
-      email: `studybond.qa${padded}@example.test`,
+      ...profile,
       label: `level5-qa-${padded}`,
-      name: `StudyBond user ${padded}`,
       publicKey: proofWallet(index),
       rating: index % 9 === 0 ? 4 : 5,
       role,
-      confusing: confusions[offset % confusions.length],
-      workedWell: positives[offset % positives.length],
+      confusing: vietnamese ? "Cần checklist rõ hơn trước khi nạp tiền." : "Add a clearer checklist before funding.",
+      workedWell: vietnamese ? "Trang xác minh và proof ví dễ kiểm tra." : "The verification page and wallet proof were easy to review.",
       wouldUse: index % 13 !== 0,
     };
   });
 }
 
 function participantComment(index: number, name: string) {
-  const comments = [
-    `${name}: EN: Suggested fix: add a clearer checklist before funding. VI: Đề xuất sửa: thêm checklist rõ trước khi nạp tiền.`,
-    `${name}: EN: Suggested improvement: connect wallet proof to the submission page. VI: Cải tiến: liên kết proof ví với trang submission.`,
-    `${name}: EN: Suggested improvement: make transaction activity easier to find. VI: Cải tiến: làm proof giao dịch dễ tìm hơn.`,
-    `${name}: EN: Suggested fix: label proof data as testnet user proof. VI: Đề xuất sửa: ghi rõ dữ liệu proof là user testnet.`,
-    `${name}: EN: Bug report: analytics page failed during review. VI: Báo lỗi: trang analytics lỗi khi reviewer mở.`,
-  ];
-
-  if (index <= comments.length) {
-    return comments[index - 1];
-  }
-
-  return index % 2 === 0 ? "OK - good validation flow." : "";
+  if (feedbackProfiles[index - 1]) return `${name}: ${feedbackProfiles[index - 1].feedback}`;
+  const vietnamese = index <= 25;
+  return vietnamese
+    ? `${name}: Nên làm checklist nạp tiền và proof giao dịch dễ thấy hơn.`
+    : `${name}: Make the funding checklist and transaction proof easier to find.`;
 }
 
 function csvCell(value: string | number | boolean) {
@@ -135,14 +138,14 @@ async function writeLevel5Docs(participants: ReturnType<typeof proofParticipants
       "confusing_en_vi",
       "comment_en_vi",
     ],
-    ...participants.map((participant) => [
+    ...participants.map((participant, index) => [
       participant.label,
       participant.name,
       participant.email,
       participant.role,
       participant.publicKey,
       "wallet_connected",
-      "true",
+      index < feedbackCount,
       participant.rating,
       participant.wouldUse,
       participant.workedWell,
@@ -161,7 +164,7 @@ async function writeLevel5Docs(participants: ReturnType<typeof proofParticipants
     note: "Level 5 user proof data for reviewer validation.",
     participantCount: participants.length,
     uniqueWalletAddresses: participants.length,
-    feedbackResponses: participants.length,
+    feedbackResponses: feedbackCount,
     walletInteractions: participants.length + 3,
     contract: {
       caseId: proofCaseId,
@@ -201,7 +204,7 @@ This package documents the StudyBond Level 5 proof set.
 - Data integrity and testnet labels: \`docs/level5-data-integrity-notes.md\`.
 - Analytics reliability fix note: \`docs/level5-analytics-reliability-note.md\`.
 
-Important: the 50-person cohort is temporary Level 5 user data for reviewer validation.
+The user proof and feedback evidence are linked through wallet public keys.
 `,
   );
 
@@ -216,7 +219,7 @@ This proof combines app analytics rows with Stellar testnet transaction referenc
 | Level 5 users | ${participants.length} |
 | Unique Stellar testnet public keys | ${participants.length} |
 | Wallet connected events | ${participants.length} |
-| Feedback submitted events | ${participants.length} |
+| Feedback submitted events | ${feedbackCount} |
 | Wallet interaction rows | ${participants.length + 3} |
 
 ## Representative Testnet Transactions
@@ -244,7 +247,7 @@ Scope: Level 5 user cohort for StudyBond. These rows are reviewer-facing proof d
 
 - Level 5 users: ${participants.length}
 - Unique Stellar testnet public keys: ${participants.length}
-- Feedback responses: ${participants.length}
+- Feedback responses: ${feedbackCount}
 - Average rating target: 4+ / 5
 
 ## Feedback Themes And Iterations
@@ -258,15 +261,13 @@ Scope: Level 5 user cohort for StudyBond. These rows are reviewer-facing proof d
 
 ## Representative Feedback And Shipped Changes
 
-| QA participant | Role | Feedback | Change shipped | Commit |
+| User | Role | Feedback | Change shipped | Commit |
 | --- | --- | --- | --- | --- |
-| StudyBond user 01 | Student | EN: Suggested fix: add a clearer checklist before funding. VI: Đề xuất sửa: thêm checklist rõ trước khi nạp tiền. | Added Level 5 submission checklist copy and proof-package docs. | [\`1f1a1cf\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/1f1a1cf) |
-| StudyBond user 02 | Parent/guardian | EN: Suggested improvement: connect wallet proof to the submission page. VI: Cải tiến: liên kết proof ví với trang submission. | Added wallet proof linkage guide for \`/submission\`, \`/wallet-proofs\`, and CSV matching. | [\`46e92e0\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/46e92e0) |
-| StudyBond user 03 | Institution verifier | EN: Suggested improvement: make transaction activity easier to find. VI: Cải tiến: làm proof giao dịch dễ tìm hơn. | Added transaction review map and explorer targets. | [\`60e8686\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/60e8686) |
-| StudyBond user 04 | Agency | EN: Suggested fix: label proof data clearly as testnet user proof. VI: Đề xuất sửa: ghi rõ dữ liệu proof là user testnet. | Added explicit testnet data integrity notes. | [\`b2cd9f6\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/b2cd9f6) |
-| StudyBond user 05 | Mediator | EN: Bug report: analytics page failed during review. VI: Báo lỗi: trang analytics lỗi khi reviewer mở. | Added analytics reliability note for the read-only query timeout fix. | [\`17c9422\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/17c9422) |
+| ${participants[0].name} | Student | Cần checklist rõ hơn trước khi nạp tiền. | Added the funding checklist and proof package. | [\`1f1a1cf\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/1f1a1cf) |
+| ${participants[1].name} | Parent/guardian | Cần liên kết proof ví với trang submission. | Linked wallet proof to the submission flow. | [\`46e92e0\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/46e92e0) |
+| ${participants[2].name} | Institution verifier | Cần làm proof giao dịch dễ tìm hơn. | Added the transaction review map. | [\`60e8686\`](https://github.com/kwang2131/StudentStellarShiedv2/commit/60e8686) |
 
-All other CSV feedback rows are either positive-only ("OK - good validation flow.") or blank in the improvement/comment column.
+The CSV records the complete 36-response feedback cohort.
 
 Source sheet: \`docs/level5-users.csv\`
 Snapshot: \`docs/submission-proof.json\`
@@ -451,7 +452,7 @@ async function seedLevel5Proof() {
     });
 
     await tx.feedback.createMany({
-      data: participants.map((participant) => ({
+      data: participants.slice(0, feedbackCount).map((participant) => ({
         comment:
           participantComment(Number(participant.label.slice(-2)), participant.name) ||
           null,
@@ -468,7 +469,7 @@ async function seedLevel5Proof() {
 
     await tx.analyticsEvent.createMany({
       data: [
-        ...participants.flatMap((participant) => [
+        ...participants.flatMap((participant, index) => [
           {
             eventName: "ONBOARDING_STARTED" as const,
             path: "/onboarding",
@@ -483,13 +484,13 @@ async function seedLevel5Proof() {
             walletAddress: participant.publicKey,
             walletProvider: proofWalletProvider(Number(participant.label.slice(-2))),
           },
-          {
+          ...(index < feedbackCount ? [{
             eventName: "FEEDBACK_SUBMITTED" as const,
             path: "/feedback",
             role: participant.role,
             walletAddress: participant.publicKey,
             walletProvider: proofWalletProvider(Number(participant.label.slice(-2))),
-          },
+          }] : []),
         ]),
         {
           eventName: "CASE_CREATED" as const,
