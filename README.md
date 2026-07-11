@@ -24,7 +24,7 @@ StudyBond is a proof-of-funds and conditional-deposit rail for international stu
 - [x] **Updated README and documentation** — [proof package](docs/level5-proof-package.md)
 - [x] **User feedback iteration summary** — [34-user log](docs/user-feedback-log.md) and [improvement summary](docs/level5-feedback-iteration-summary.md)
 - [x] **Google Form question set** — [form template](docs/user-feedback-form.md)
-- [x] **Excel-compatible response export** — [CSV export](docs/level5-users.csv)
+- [x] **Google Sheet response export** — [open native Google Sheet](https://docs.google.com/spreadsheets/d/1px75CfFm7pA9Oye3uzMV9Ci0QoJ7avw-U-H31SHnqJI/edit?usp=drivesdk) · [CSV source](docs/level5-users.csv)
 
 ### Monthly submission
 
