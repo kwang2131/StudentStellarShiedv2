@@ -7,7 +7,7 @@ This proof combines app analytics rows with Stellar testnet transaction referenc
 | Level 5 users | 50 |
 | Unique Stellar testnet public keys | 50 |
 | Wallet connected events | 50 |
-| Feedback submitted events | 50 |
+| Feedback submitted events | 36 |
 | Wallet interaction rows | 53 |
 
 ## Representative Testnet Transactions

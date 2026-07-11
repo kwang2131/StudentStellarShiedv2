@@ -1,36 +1,31 @@
 # StudyBond
 
-User feedback: [32-user feedback log](docs/user-feedback-log.md) · [improvement summary](docs/level5-feedback-iteration-summary.md) · [HTML pitch deck](public/submission/pitch-deck.html).
-
 [![CI](https://github.com/kwang2131/StudentStellarShiedv2/actions/workflows/ci.yml/badge.svg)](https://github.com/kwang2131/StudentStellarShiedv2/actions/workflows/ci.yml)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![Stellar](https://img.shields.io/badge/Stellar-Testnet-1d8cff)
 ![Soroban](https://img.shields.io/badge/Soroban-Contract%20Deployed-0f8f63)
 
-Proof-of-funds and conditional deposit rail for international students on Stellar testnet.
+StudyBond is a proof-of-funds and conditional-deposit rail for international students, families, institutions, agencies, and mediators on Stellar testnet.
 
-## Level 5 Submission Snapshot
+## Start Here
 
-- Public GitHub repository: `https://github.com/kwang2131/StudentStellarShiedv2`
-- Public Live Link Demo: [https://studentstellarshiedv2-production.up.railway.app](https://studentstellarshiedv2-production.up.railway.app)
-- README with complete documentation: complete
-- Minimum 20+ meaningful commits: complete (`22` commits in current history before this update)
-- Proof of 50+ users: `50` Level 5 users with unique Stellar testnet public keys
-- Feedback responses: `50` bilingual EN/VI feedback records
-- Analytics activity: `50` wallet-connected events plus contract activity proof
-- Contract deployment address: `CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N`
-- Contract interaction transaction hash: `93c498b48e9cc3a02382307390cab5b2fb1b8f48c2cbb40ce7b8d397e948e9ff`
-- Level 5 proof package: [`docs/level5-proof-package.md`](docs/level5-proof-package.md)
-- Proof sheet source: [`docs/level5-users.csv`](docs/level5-users.csv)
-- Demo video link: pending real recording
+| Area | Link / status |
+| --- | --- |
+| Live product | [Railway deployment](https://studentstellarshiedv2-production.up.railway.app) |
+| User feedback | [36-response dataset](docs/level5-users.csv) · [feedback log](docs/user-feedback-log.md) · [improvements](docs/level5-feedback-iteration-summary.md) |
+| Presentation | [HTML pitch deck](public/submission/pitch-deck.html) |
+| Wallet proof | 50 unique Stellar testnet public keys in [submission-proof.json](docs/submission-proof.json) |
+| On-chain proof | [Contract](https://stellar.expert/explorer/testnet/contract/CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N) · [featured transaction](https://stellar.expert/explorer/testnet/tx/93c498b48e9cc3a02382307390cab5b2fb1b8f48c2cbb40ce7b8d397e948e9ff) |
+| Repository / CI | [GitHub](https://github.com/kwang2131/StudentStellarShiedv2) · [workflow](.github/workflows/ci.yml) |
 
-## Project Links
+## Submission Evidence
 
-- Repository: `https://github.com/kwang2131/StudentStellarShiedv2`
-- CI workflow: `https://github.com/kwang2131/StudentStellarShiedv2/actions/workflows/ci.yml`
-- Contract: `https://stellar.expert/explorer/testnet/contract/CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N`
-- Contract deploy tx: `https://stellar.expert/explorer/testnet/tx/6974a0a1604d0cfbf73977ad1094fdb40973ef4e6ffb0d4fe4c9ad0735fe0f47`
-- Featured interaction tx: `https://stellar.expert/explorer/testnet/tx/93c498b48e9cc3a02382307390cab5b2fb1b8f48c2cbb40ce7b8d397e948e9ff`
+| Metric | Value |
+| --- | ---: |
+| Connected wallets | 50 |
+| User feedback responses | 36 |
+| Wallet-connected events | 50 |
+| Feedback audit | `npm run feedback:audit` |
 
 ## What StudyBond Solves
 
