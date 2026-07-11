@@ -20,5 +20,5 @@ This keeps the pages simpler and avoids interactive transaction startup failures
 ## Verification
 
 - `/analytics` returns HTTP 200.
-- `docs/screenshots/analytics-activity-proof.png` shows the telemetry page with 50 wallet connects and 50 feedback submissions.
+- `docs/screenshots/analytics-activity-proof.png` shows the telemetry page with 50 wallet connects and 34 feedback submissions.
 - `npm run lint`, `npm run typecheck`, `npm run test`, and `npm run build` passed after the fix.

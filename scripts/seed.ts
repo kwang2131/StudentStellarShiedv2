@@ -50,19 +50,18 @@ const roles = [
   "REVIEWER",
 ] as const;
 
-const feedbackCount = 36;
+const feedbackCount = 34;
 const vietnameseFamilies = ["Nguyễn", "Trần", "Lê", "Phạm", "Võ"];
 const vietnameseNames = ["Minh Anh", "Quốc Bảo", "Hoàng Linh", "Thu Hà", "Đức Huy"];
 const internationalFirstNames = ["Emily", "Daniel", "Sofia", "Liam", "Aisha"];
 const internationalLastNames = ["Harper", "Kim", "Martinez", "Carter", "Rahman"];
-const feedbackProfiles = [...readFileSync(path.join(process.cwd(), "docs", "user-feedback-log.md"), "utf8")
-  .matchAll(/^\|\s*\d+\s*\|\s*([^|]+)\|\s*([^|]+)\|\s*[^|]+\|\s*([^|]+)\|/gm)]
-  .map((match) => ({
-    name: match[1].trim(),
-    email: match[2].trim(),
-    feedback: match[3].trim(),
-    language: /[^\x00-\x7F]/.test(match[3]) ? "vi" as const : "en" as const,
-  }));
+const feedbackProfiles = readFileSync(path.join(process.cwd(), "docs", "user-feedback-log.md"), "utf8")
+  .split("\n").filter((line) => /^\|\s*\d+\s*\|/.test(line)).map((line) => {
+    const cells = line.split("|").slice(1, -1).map((value) => value.trim());
+    const offset = cells.length === 6 ? 1 : 0;
+    const feedback = cells[4 + offset];
+    return { name: cells[1], email: cells[2], feedback, language: /[^\x00-\x7F]/.test(feedback) ? "vi" as const : "en" as const };
+  });
 
 function userProfile(index: number) {
   const vietnamese = index < 25;
