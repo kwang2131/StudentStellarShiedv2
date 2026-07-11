@@ -7,25 +7,38 @@
 
 StudyBond is a proof-of-funds and conditional-deposit rail for international students, families, institutions, agencies, and mediators on Stellar testnet.
 
-## Start Here
+## ✅ Submission Checklist
 
-| Area | Link / status |
-| --- | --- |
-| Live product | [Railway deployment](https://studentstellarshiedv2-production.up.railway.app) |
-| User feedback | [36-response dataset](docs/level5-users.csv) · [feedback log](docs/user-feedback-log.md) · [improvements](docs/level5-feedback-iteration-summary.md) |
-| Presentation | [HTML pitch deck](public/submission/pitch-deck.html) |
-| Wallet proof | 50 unique Stellar testnet public keys in [submission-proof.json](docs/submission-proof.json) |
-| On-chain proof | [Contract](https://stellar.expert/explorer/testnet/contract/CBDRQOFYQBJRWLLNAEFUDTP5IWBJQOTDDQT5INKDRBNVIW2DZF62HR5N) · [featured transaction](https://stellar.expert/explorer/testnet/tx/93c498b48e9cc3a02382307390cab5b2fb1b8f48c2cbb40ce7b8d397e948e9ff) |
-| Repository / CI | [GitHub](https://github.com/kwang2131/StudentStellarShiedv2) · [workflow](.github/workflows/ci.yml) |
+### Delivery
 
-## Submission Evidence
+- [x] **Public GitHub repository** — [kwang2131/StudentStellarShiedv2](https://github.com/kwang2131/StudentStellarShiedv2)
+- [x] **Minimum 20+ meaningful commits** — 42+ commits on `main`
+- [x] **Live deployed application** — [launch StudyBond](https://studentstellarshiedv2-production.up.railway.app)
+- [x] **PPT/Pitch deck link** — [open the HTML pitch deck](https://studentstellarshiedv2-production.up.railway.app/submission/pitch-deck.html)
+- [ ] **Demo video link** — recording is pending; see [video status](#what-is-intentionally-left-blank)
 
-| Metric | Value |
-| --- | ---: |
-| Connected wallets | 50 |
-| User feedback responses | 36 |
-| Wallet-connected events | 50 |
-| Feedback audit | `npm run feedback:audit` |
+### Proof
+
+- [x] **Proof of 50+ users** — [50-wallet snapshot](docs/submission-proof.json) and [user proof CSV](docs/level5-users.csv)
+- [x] **Screenshots of analytics or transaction activity** — [analytics](docs/screenshots/analytics-activity-proof.png), [transaction proof](docs/level5-transaction-activity-proof.md), and [wallet proof](docs/screenshots/submission-50-wallet-proof.png)
+- [x] **Updated README and documentation** — [proof package](docs/level5-proof-package.md)
+- [x] **User feedback iteration summary** — [36-user log](docs/user-feedback-log.md) and [improvement summary](docs/level5-feedback-iteration-summary.md)
+
+### Monthly submission
+
+Submit your GitHub repository link below before the monthly deadline:
+
+**https://github.com/kwang2131/StudentStellarShiedv2**
+
+<details>
+<summary>Current evidence totals</summary>
+
+- 50 connected wallets
+- 36 user feedback responses
+- 50 wallet-connected events
+- Feedback validation: `npm run feedback:audit`
+
+</details>
 
 ## What StudyBond Solves
 
