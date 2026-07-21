@@ -1,6 +1,6 @@
 # Level 5 Funding Readiness Checklist
 
-This checklist addresses QA feedback that the funding step needed clearer pre-submit guidance.
+This checklist addresses reviewer feedback that the funding step needed clearer pre-submit guidance.
 
 Before funding a StudyBond case, reviewers should verify:
 

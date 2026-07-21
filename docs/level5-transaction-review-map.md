@@ -1,6 +1,6 @@
 # Level 5 Transaction Review Map
 
-This map addresses QA feedback that transaction activity should be easier to find.
+This map addresses reviewer feedback that transaction activity should be easier to find.
 
 ## Reviewer Checks
 

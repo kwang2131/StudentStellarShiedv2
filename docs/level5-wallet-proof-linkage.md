@@ -1,6 +1,6 @@
 # Level 5 Wallet Proof Linkage
 
-This note addresses QA feedback that wallet proof needed a clearer connection to the reviewer submission page.
+This note addresses reviewer feedback that wallet proof needed a clearer connection to the reviewer submission page.
 
 Reviewer path:
 
@@ -10,7 +10,7 @@ Reviewer path:
 4. Match wallet addresses against the linked Google Sheet response export.
 5. Check transaction-backed rows in `docs/level5-transaction-activity-proof.md`.
 
-Expected seeded proof state:
+Expected user proof state:
 
 - 50 Level 5 users.
 - 50 unique Stellar testnet wallet addresses.

@@ -1,6 +1,6 @@
 # Level 5 Analytics Reliability Note
 
-This note addresses QA feedback that the analytics page failed during reviewer checks.
+This note addresses reviewer feedback that the analytics page failed during reviewer checks.
 
 ## Problem
 
