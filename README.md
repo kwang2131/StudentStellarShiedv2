@@ -15,7 +15,7 @@ StudyBond is a proof-of-funds and conditional-deposit rail for international stu
 - [x] **Minimum 20+ meaningful commits** — 42+ commits on `main`
 - [x] **Live deployed application** — [launch StudyBond](https://studentstellarshiedv2-production.up.railway.app)
 - [x] **PPT/Pitch deck link** — [open the HTML pitch deck](https://studentstellarshiedv2-production.up.railway.app/submission/pitch-deck.html)
-- [x] **Demo video link** — [watch the deployed MP4](https://studentstellarshiedv2-production.up.railway.app/submission/level5-demo.mp4) or open the [repo copy](public/submission/level5-demo.mp4)
+- [x] **Demo video link** — [watch the MP4](https://raw.githubusercontent.com/kwang2131/StudentStellarShiedv2/main/public/submission/level5-demo.mp4) or open the [repo copy](public/submission/level5-demo.mp4)
 
 ### Proof
 
@@ -346,7 +346,7 @@ This repo already includes `vercel.json` with:
 
 ## Demo Video
 
-The Level 5 walkthrough recording is included as [public/submission/level5-demo.mp4](public/submission/level5-demo.mp4). After deployment, the same recording is available at https://studentstellarshiedv2-production.up.railway.app/submission/level5-demo.mp4.
+The Level 5 walkthrough recording is included as [public/submission/level5-demo.mp4](public/submission/level5-demo.mp4). Reviewers can open it directly from GitHub at https://raw.githubusercontent.com/kwang2131/StudentStellarShiedv2/main/public/submission/level5-demo.mp4.
 
 ## Compliance Disclaimer
 
